@@ -13,6 +13,10 @@ classdef gnuplotter < handle
 			fputs(obj.gp, "plot sin(x)\n");
 		endfunction
 
+		function disp(obj)
+			disp("gnuplotter");
+		endfunction
+
 		function close(obj)
 			fputs(obj.gp, "exit\n");
 			pclose(obj.gp);

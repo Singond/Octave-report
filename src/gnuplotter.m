@@ -1,5 +1,5 @@
 classdef gnuplotter < handle
-	properties
+	properties (Access = private)
 		gp
 	endproperties
 

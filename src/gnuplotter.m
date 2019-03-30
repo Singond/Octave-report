@@ -55,6 +55,12 @@ classdef gnuplotter < handle
 			endif
 		endfunction
 
+		function plotdata(obj, D, style)
+			datastring = sprintf("%f %f\n", D');
+			disp("Plotting numeric values");
+			fputs(obj.gp, sprintf("plot '-' u 1:2 %s\n%se\n", style, datastring));
+		endfunction
+
 		function disp(obj)
 			disp("gnuplotter");
 		endfunction
@@ -69,6 +75,18 @@ classdef gnuplotter < handle
 			disp("Closing gnuplotter");
 			fputs(obj.gp, "exit\n");
 			pclose(obj.gp);
+		endfunction
+	endmethods
+
+	methods (Static = true)
+		function D = datamatrix(X, Y)
+			if (!isnumeric(X))
+				error("X must be a numeric value");
+			elseif (!isnumeric(Y))
+				error("Y must be a numeric value");
+			endif
+			# TODO Check for size compatibility
+			D = [X(:) Y(:)];
 		endfunction
 	endmethods
 endclassdef

@@ -52,7 +52,14 @@ classdef gnuplotter < handle
 			disp("gnuplotter");
 		endfunction
 
-		function close(obj)
+		## DEPRECATED. Will be renamed to 'delete' in future release, once
+		## the destructor methods on classdef objects work correctly
+		## (this may already be true in Octave 5).
+		## In Octave version 4.4, renaming this method to 'delete' and calling
+		## it implicitly by the 'clear' command does not work, because the 'gp'
+		## field is destroyed even before invoking 'delete'.
+		function deletex(obj)
+			disp("Closing gnuplotter");
 			fputs(obj.gp, "exit\n");
 			pclose(obj.gp);
 		endfunction

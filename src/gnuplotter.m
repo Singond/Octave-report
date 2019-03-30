@@ -10,7 +10,11 @@ classdef gnuplotter < handle
 		endfunction
 
 		function plotsine(obj)
-			fputs(obj.gp, "plot sin(x)\n");
+			fputs(obj.gp, "plot sin(x), sin(x-0.4), sin(x-0.8)\n");
+		endfunction
+
+		function load(obj, filename)
+			fputs(obj.gp, sprintf("load '%s'\n", filename));
 		endfunction
 
 		function disp(obj)

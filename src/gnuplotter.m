@@ -13,6 +13,13 @@ classdef gnuplotter < handle
 			fputs(obj.gp, "plot sin(x), sin(x-0.4), sin(x-0.8)\n");
 		endfunction
 
+		## usage: exec(command)
+		##
+		## Executes arbitraty gnuplot command.
+		function exec(obj, cmdline)
+			fputs(obj.gp, [cmdline "\n"]);
+		endfunction
+
 		function load(obj, filename)
 			fputs(obj.gp, sprintf("load '%s'\n", filename));
 		endfunction

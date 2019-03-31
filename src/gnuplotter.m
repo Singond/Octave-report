@@ -56,6 +56,14 @@ classdef gnuplotter < handle
 			fputs(obj.gp, datastring);
 		endfunction
 
+		function xlabel(obj, label)
+			fputs(obj.gp, sprintf("set xlabel \"%s\"\n", label));
+		endfunction
+
+		function ylabel(obj, label)
+			fputs(obj.gp, sprintf("set ylabel \"%s\"\n", label));
+		endfunction
+
 		function disp(obj)
 			disp("gnuplotter");
 		endfunction

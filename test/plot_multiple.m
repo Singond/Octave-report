@@ -10,6 +10,8 @@ gp.addplot([x; y]', "w l title 'sinc(x)' ls 1");
 gp.addplot("1/x", "w l title '1/x' ls 0");
 gp.addplot("-1/x", "w l title '-1/x' ls 0");
 gp.addplot([x; z]', "w l title 'cosc(x)' ls 2");
+gp.xlabel("Angle");
+gp.ylabel("Value");
 gp.plot;
 
 pause();

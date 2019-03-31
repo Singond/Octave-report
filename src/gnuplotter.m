@@ -62,7 +62,7 @@ classdef gnuplotter < handle
 			fputs(obj.gp, sprintf("plot '-' u 1:2 %s\n%se\n", style, datastring));
 		endfunction
 
-		function addplot(obj, D, style)
+		function addplot(obj, D, style="")
 			obj.plots = [obj.plots; {D style}];
 		endfunction
 

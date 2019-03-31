@@ -58,7 +58,7 @@ classdef gnuplotter < handle
 
 		function plotdata(obj, D, style)
 			datastring = sprintf("%f %f\n", D');
-			disp("Plotting numeric values");
+#			disp("Plotting numeric values");
 			fputs(obj.gp, sprintf("plot '-' u 1:2 %s\n%se\n", style, datastring));
 		endfunction
 
@@ -67,21 +67,21 @@ classdef gnuplotter < handle
 		endfunction
 
 		function plotall(obj)
-			plotstring = "";
+			# Return if plots is empty
+			plotstring = "plot ";
 			datastring = "";
 			for r = 1:rows(obj.plots)
 				plot = obj.plots{r,1};
 				style = obj.plots{r,2};
 				if (isnumeric(plot))
-					plotstring = [plotstring sprintf("plot '-' using 1:2 %s", style)];
-					datastring = [datastring; num2str(plot); "e\n"];
+					plotstring = [plotstring sprintf("'-' using 1:2 %s, ", style)];
+					datastring = [datastring "\n" sprintf("%f %f\n", plot') "e\n"];
 				endif
 			endfor
-			disp([plotstring "\n"]);
+#			disp([plotstring "\n"]);
 			fputs(obj.gp, [plotstring "\n"]);
-			disp(datastring);
+#			disp(datastring);
 			fputs(obj.gp, datastring);
-#			fputs(obj.gp, "\n");
 		endfunction
 
 		function disp(obj)

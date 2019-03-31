@@ -3,9 +3,11 @@ addpath("../src");
 
 gp = gnuplotter();
 gp.load("header.gp");
-x = 0.1:0.1:10;
+x = 1:0.1:10;
 y = sin(x) ./ x;
-gp.addplot([x; y]', "w p");
+z = cos(x) ./ x;
+gp.addplot([x; y]', "w p title 'sinc(x)'");
+gp.addplot([x; z]', "w p title 'cosc(x)'");
 gp.plotall;
 
 pause();

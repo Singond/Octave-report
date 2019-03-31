@@ -67,6 +67,10 @@ classdef gnuplotter < handle
 		endfunction
 
 		function plotall(obj)
+			if (rows(obj.plots) < 1)
+				disp("Nothing to plot");
+				return;
+			endif
 			# Return if plots is empty
 			plotstring = "plot ";
 			datastring = "";
@@ -83,7 +87,7 @@ classdef gnuplotter < handle
 				endif
 			endfor
 #			disp([plotstring "\n"]);
-			fputs(obj.gp, [plotstring "\n"]);
+			fputs(obj.gp, [plotstring(1:end-2) "\n"]);
 #			disp(datastring);
 			fputs(obj.gp, datastring);
 		endfunction

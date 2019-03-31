@@ -74,8 +74,12 @@ classdef gnuplotter < handle
 				plot = obj.plots{r,1};
 				style = obj.plots{r,2};
 				if (isnumeric(plot))
+					# Data is numeric
 					plotstring = [plotstring sprintf("'-' using 1:2 %s, ", style)];
 					datastring = [datastring "\n" sprintf("%f %f\n", plot') "e\n"];
+				elseif (ischar(plot))
+					# Data is function expression
+					plotstring = [plotstring sprintf("%s %s, ", plot, style)];
 				endif
 			endfor
 #			disp([plotstring "\n"]);

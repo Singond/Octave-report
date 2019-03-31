@@ -8,7 +8,7 @@ y = sin(x) ./ x;
 z = cos(x) ./ x;
 gp.addplot([x; y]');
 gp.addplot([x; z]');
-gp.plotall;
+gp.plot;
 
 pause();
 gp.deletex();

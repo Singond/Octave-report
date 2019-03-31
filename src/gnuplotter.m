@@ -1,6 +1,7 @@
 classdef gnuplotter < handle
 	properties (Access = private)
 		gp
+		plots = cell(0,2)
 	endproperties
 
 	methods
@@ -59,6 +60,28 @@ classdef gnuplotter < handle
 			datastring = sprintf("%f %f\n", D');
 			disp("Plotting numeric values");
 			fputs(obj.gp, sprintf("plot '-' u 1:2 %s\n%se\n", style, datastring));
+		endfunction
+
+		function addplot(obj, D, style)
+			obj.plots = [obj.plots; {D style}];
+		endfunction
+
+		function plotall(obj)
+			plotstring = "";
+			datastring = "";
+			for r = 1:rows(obj.plots)
+				plot = obj.plots{r,1};
+				style = obj.plots{r,2};
+				if (isnumeric(plot))
+					plotstring = [plotstring sprintf("plot '-' using 1:2 %s", style)];
+					datastring = [datastring; num2str(plot); "e\n"];
+				endif
+			endfor
+			disp([plotstring "\n"]);
+			fputs(obj.gp, [plotstring "\n"]);
+			disp(datastring);
+			fputs(obj.gp, datastring);
+#			fputs(obj.gp, "\n");
 		endfunction
 
 		function disp(obj)

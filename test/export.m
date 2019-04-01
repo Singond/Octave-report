@@ -1,5 +1,5 @@
 clear all;
-addpath("../src");
+addpath("../src/octave");
 
 gp = gnuplotter();
 gp.load("header.gp");

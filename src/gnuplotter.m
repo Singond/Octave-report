@@ -68,6 +68,15 @@ classdef gnuplotter < handle
 			fputs(obj.gp, sprintf("set title \"%s\"\n", title));
 		endfunction
 
+		function export(obj, file, term, options)
+			fputs(obj.gp, "set terminal push\n");
+			fputs(obj.gp, sprintf("set terminal %s %s\n", term, options));
+			fputs(obj.gp, sprintf("set output \"%s\"\n", file));
+			obj.plot();
+			fputs(obj.gp, "set output\n");
+			fputs(obj.gp, "set terminal pop\n");
+		endfunction
+
 		function disp(obj)
 			disp("gnuplotter");
 		endfunction

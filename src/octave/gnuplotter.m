@@ -25,8 +25,18 @@ classdef gnuplotter < handle
 			fputs(obj.gp, sprintf("load '%s'\n", filename));
 		endfunction
 
+		function data(obj, D)
+			fmt = [repmat('%g ', [1 columns(D)])(1:end-1) "\n"];
+			fprintf(obj.gp, fmt, D');
+			fputs(obj.gp, "e\n");
+		endfunction
+
 		function addplot(obj, D, style="")
 			obj.plots = [obj.plots; {D style}];
+		endfunction
+
+		function clearplot(obj)
+			obj.plots = cell(0,2);
 		endfunction
 
 		## Draws plot according to specifications and data given in addplot.

@@ -25,8 +25,19 @@ classdef gnuplotter < handle
 			fputs(obj.gp, sprintf("load '%s'\n", filename));
 		endfunction
 
+		## Passes numerical data directly to gnuplot.
+		function data(obj, D)
+			fmt = [repmat('%g ', [1 columns(D)])(1:end-1) "\n"];
+			fprintf(obj.gp, fmt, D');
+			fputs(obj.gp, "e\n");
+		endfunction
+
 		function addplot(obj, D, style="")
 			obj.plots = [obj.plots; {D style}];
+		endfunction
+
+		function clearplot(obj)
+			obj.plots = cell(0,2);
 		endfunction
 
 		## Draws plot according to specifications and data given in addplot.
@@ -43,8 +54,12 @@ classdef gnuplotter < handle
 				style = obj.plots{r,2};
 				if (isnumeric(plot))
 					# Data is numeric
-					plotstring = [plotstring sprintf("'-' using 1:2 %s, ", style)];
-					datastring = [datastring "\n" sprintf("%f %f\n", plot') "e\n"];
+					c = columns(plot);
+					cols = sprintf("%d:", 1:c)(1:end-1);
+					plotstring = [plotstring ...
+						sprintf("'-' using %s %s, ", cols, style)];
+					fmt = [repmat('%g ', [1 c])(1:end-1) "\n"];
+					datastring = [datastring sprintf(fmt, plot') "e\n"];
 				elseif (ischar(plot))
 					# Data is function expression
 					plotstring = [plotstring sprintf("%s %s, ", plot, style)];

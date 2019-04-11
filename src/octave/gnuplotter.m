@@ -59,7 +59,7 @@ classdef gnuplotter < handle
 					plotstring = [plotstring ...
 						sprintf("'-' using %s %s, ", cols, style)];
 					fmt = [repmat('%g ', [1 c])(1:end-1) "\n"];
-					datastring = [datastring "\n" sprintf(fmt, plot') "e\n"];
+					datastring = [datastring sprintf(fmt, plot') "e\n"];
 				elseif (ischar(plot))
 					# Data is function expression
 					plotstring = [plotstring sprintf("%s %s, ", plot, style)];

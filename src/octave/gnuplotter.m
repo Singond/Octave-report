@@ -32,7 +32,7 @@ classdef gnuplotter < handle
 			fputs(obj.gp, "e\n");
 		endfunction
 
-		function addplot(obj, D, style="")
+		function plot(obj, D, style="")
 			obj.plots = [obj.plots; {D style}];
 		endfunction
 
@@ -40,8 +40,8 @@ classdef gnuplotter < handle
 			obj.plots = cell(0,2);
 		endfunction
 
-		## Draws plot according to specifications and data given in addplot.
-		function plot(obj)
+		## Draws plot according to specifications and data given in `plot`.
+		function doplot(obj)
 			if (rows(obj.plots) < 1)
 				disp("Nothing to plot");
 				return;
@@ -87,7 +87,7 @@ classdef gnuplotter < handle
 			fputs(obj.gp, "set terminal push\n");
 			fputs(obj.gp, sprintf("set terminal %s %s\n", term, options));
 			fputs(obj.gp, sprintf("set output \"%s\"\n", file));
-			obj.plot();
+			obj.doplot();
 			fputs(obj.gp, "set output\n");
 			fputs(obj.gp, "set terminal pop\n");
 		endfunction

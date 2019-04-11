@@ -52,8 +52,8 @@ The following is a minimal example. This will plot the function `sinc(x)` in the
 gp = gnuplotter();
 x = 1:0.1:10;
 y = sin(x) ./ x;
-gp.addplot([x; y]', "with lines");
-gp.plot();                           # Plots sinc(x) in the default terminal
+gp.plot([x; y]', "with lines");      # Queue sinc(x) for plotting
+gp.doplot();                         # Draw the defined plot in the default terminal
 gp.deletex();                        # Close to release system resources
 ```
 

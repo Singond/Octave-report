@@ -1,13 +1,10 @@
-Name: gnuplotter
+Name: report
 Version: VAR_VERSION
 Date: 2019-04-01
 Author: Singon
 Maintainer: Singon
-Title: Gnuplot bindings for Octave
-Description: Enables controlling Gnuplot from within Octave.
- While Octave supports Gnuplot natively, it abstracts from its details and
- makes fine-grained control over the final result difficult. This utility aims
- to fill this gap by providing more direct control over what is being passed
- to Gnuplot.
-Categories: gnuplot
+Title: Reporting tools for Octave
+Description: A set of tools to facilitate exporting data from Octave to other
+ formats.
+Categories: report
 License: To be added

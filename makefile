@@ -1,6 +1,6 @@
 SOURCES := $(shell find src -type f)
-VERSION := 0.1.0
-PKG_NAME := gnuplotter
+VERSION := 0.2.0
+PKG_NAME := report
 
 .PHONY: dist clean
 

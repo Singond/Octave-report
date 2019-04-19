@@ -1,9 +1,10 @@
 Changelog
 =========
-This is a changelog for the Octave `gnuplotter` package.
+This is a changelog for the Octave `report` package.
 
 Unreleased
 ----------
+Package name has been changed from `gnuplotter` to `report`.
 
 ### Added
 - It is now possible to pass raw tabular data to gnuplot from numeric array

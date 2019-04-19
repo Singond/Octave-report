@@ -1,14 +1,7 @@
-Gnuplot bindings for Octave
-===========================
+Reporting tools for Octave
+==========================
 
-Enables controlling Gnuplot from within Octave.
-While Octave supports Gnuplot natively, it abstracts from its details and makes
-fine-grained control over the final result difficult. This utility aims to fill
-this gap by providing more direct control over what is being passed to Gnuplot.
-
-Requirements
-============
-- `gnuplot` must be installed on your system and available on `PATH`
+A set of tools to facilitate exporting data from Octave to other formats.
 
 Installation
 ============
@@ -25,35 +18,39 @@ Before proceeding, make sure that `make` is installed. Then follow these steps:
 In summary:
 
 ```sh
-cd Octave-gnuplot/
+cd Octave-report/
 make dist
 cd build
 octave
-octave> pkg install "gnuplotter-0.1.0.tar.gz";
+octave> pkg install "report-0.2.0.tar.gz";
 octave> exit
 ```
 
-The `gnuplotter` package should now be available in octave.
+The `report` package should now be available in octave.
 
 Usage
 =====
 
-In Octave, load `gnuplotter` as any other package:
-```sh
-octave> pkg load gnuplotter;
+In Octave, load `report` as any other package:
+```
+octave> pkg load report;
 ```
 
 Examples
 ========
 
-The following is a minimal example. This will plot the function `sinc(x)` in the default terminal:
+Controlling `gnuplot` from within `octave`.
+-------------------------------------------
+
+The following is a minimal example. This will plot the function `sinc(x)`
+in the default terminal:
 
 ```octave
 gp = gnuplotter();
 x = 1:0.1:10;
 y = sin(x) ./ x;
-gp.plot([x; y]', "with lines");      # Queue sinc(x) for plotting
-gp.doplot();                         # Draw the defined plot in the default terminal
-gp.deletex();                        # Close to release system resources
+gp.plot([x; y]', "with lines"); # Queue sinc(x) for plotting
+gp.doplot();                    # Draw the defined plot in the default terminal
+gp.deletex();                   # Close to release system resources
 ```
 

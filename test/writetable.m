@@ -21,4 +21,4 @@ data = [
 	8, 795, 0.09, 1.58, 14.0
 ];
 
-F = dlmprintf(stdout, "%.0f %3.0f %4.2f %4.2f %4.1f", data, ", ", header);
+dlmprintf(stdout, "%.0f %3.0f %4.2f %4.2f %4.1f", data, ", ", header);

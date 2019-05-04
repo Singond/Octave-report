@@ -1,4 +1,4 @@
-function dataformat = dlmprintf(file, format, M, dlm, H)
+function dlmprintf(file, format, M, dlm, H)
 	## Make sure 'file' is a valid file handle
 	localhandle = 0; # File handle is local and should be closed before return
 	if (is_valid_file_id(file))

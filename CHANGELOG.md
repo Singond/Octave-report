@@ -10,6 +10,8 @@ Package name has been changed from `gnuplotter` to `report`.
 - It is now possible to pass raw tabular data to gnuplot from numeric array
   using the `data` function.
 - Added this changelog.
+- Added functions to export numeric arrays into CSV and similar formats.
+  See functions `dlmformat` and `csvformat`.
 
 ### Changed
 - **Incompatbility note:** The `addplot` function has been renamed to `plot`,

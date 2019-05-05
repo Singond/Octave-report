@@ -1,3 +1,4 @@
+## Export numeric array to a delimiter-separated value format with a header.
 function dlmprintf(file, format, M, dlm, H)
 	## Make sure 'file' is a valid file handle
 	localhandle = 0; # File handle is local and should be closed before return

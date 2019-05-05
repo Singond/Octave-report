@@ -21,4 +21,6 @@ data = [
 	8, 795, 0.09, 1.58, 14.0
 ];
 
-dlmprintf(stdout, "%.0f %3.0f %4.2f %4.2f %4.1f", data, ", ", header);
+format = "%.0f %3.0f %4.2f %4.2f %4.1f";
+dlmprintf(stdout, format, data, ", ", header);
+dlmprintf("writetable.csv", format, data, ", ", header);

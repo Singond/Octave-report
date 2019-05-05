@@ -4,7 +4,7 @@ function dlmprintf(file, format, M, dlm, H)
 	if (is_valid_file_id(file))
 		## Do nothing, 'file' is already an open and existing file
 	elseif (ischar(file))
-		file = fopen(file);
+		file = fopen(file, "w");
 		localhandle = 1;
 	endif
 

@@ -1,5 +1,5 @@
 ## -*- texinfo -*-
-## @deftypefn {Function File} {} dlmprintf(@var{file}, @var{format}, @var{M}, @var{dlm}, @var{h})
+## @deftypefn {Function File} {} dlmformat(@var{file}, @var{format}, @var{M}, @var{dlm}, @var{h})
 ##
 ## Export numeric array @var{M} to delimiter separated values with a header
 ## @var{H} to @var{file}.
@@ -14,7 +14,7 @@
 ## to ensure that the number of elements matches the number of columns in
 ## the input matrix @var{M}.
 ## @end deftypefn
-function dlmprintf(file, format, M, dlm, H)
+function dlmformat(file, format, M, dlm, H)
 	## Make sure 'file' is a valid file handle
 	localhandle = 0; # File handle is local and should be closed before return
 	if (is_valid_file_id(file))

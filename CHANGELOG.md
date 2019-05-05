@@ -2,9 +2,9 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
-Unreleased
-----------
-Package name has been changed from `gnuplotter` to `report`.
+[0.2.0] - 2019-05-05
+--------------------
+**Important:** Package name has been changed from `gnuplotter` to `report`.
 
 ### Added
 - It is now possible to pass raw tabular data to gnuplot from numeric array
@@ -17,8 +17,8 @@ Package name has been changed from `gnuplotter` to `report`.
 - **Incompatbility note:** The `addplot` function has been renamed to `plot`,
   while the original `plot` function is now called `doplot`.
 
-[0.1.0] - 2019-04-2
--------------------
+[0.1.0] - 2019-04-02
+--------------------
 First version. Includes basic commands for starting, interaction
 and termination of gnuplot process, as well as simple interface for
 plotting. Distribution is enabled as an octave package.

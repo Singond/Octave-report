@@ -1,4 +1,19 @@
-## Export numeric array to a delimiter-separated value format with a header.
+## -*- texinfo -*-
+## @deftypefn {Function File} {} dlmprintf(@var{file}, @var{format}, @var{M}, @var{dlm}, @var{h})
+##
+## Export numeric array @var{M} to delimiter separated values with a header
+## @var{H} to @var{file}.
+##
+## @var{file} can be a filename or a file handle. If it is a filename, a file
+## with this name is written.
+##
+## The individual cells are formatted according to @var{format}. This is
+## a space-separated string containing a format string for each column.
+## This argument is split at spaces, a delimiter @var{dlm} is inserted
+## between them and a newline is appended to the end. Care must be taken
+## to ensure that the number of elements matches the number of columns in
+## the input matrix @var{M}.
+## @end deftypefn
 function dlmprintf(file, format, M, dlm, H)
 	## Make sure 'file' is a valid file handle
 	localhandle = 0; # File handle is local and should be closed before return

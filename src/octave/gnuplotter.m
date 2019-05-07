@@ -17,10 +17,6 @@ classdef gnuplotter < handle
 			obj.gp = popen("gnuplot", "w");
 		endfunction
 
-		function plotsine(obj)
-			fputs(obj.gp, "plot sin(x), sin(x-0.4), sin(x-0.8)\n");
-		endfunction
-
 		## usage: exec(command)
 		##
 		## Executes arbitraty gnuplot command.

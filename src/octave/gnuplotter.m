@@ -7,8 +7,12 @@
 
 classdef gnuplotter < handle
 	properties (Access = private)
+		## The gnuplot process
 		gp
+		## Default plot to be used when plotdef functions are invoked
+		## directly on this object.
 		plt
+		## A list of all plotdefs sharing this gnuplot process
 		allplots = cell();
 	endproperties
 
@@ -38,6 +42,26 @@ classdef gnuplotter < handle
 			fputs(obj.gp, "e\n");
 		endfunction
 
+#		function defaultxlabel(obj, label)
+#			fputs(obj.gp, sprintf("set xlabel \"%s\"\n", label));
+#		endfunction
+#
+#		function defaultylabel(obj, label)
+#			fputs(obj.gp, sprintf("set ylabel \"%s\"\n", label));
+#		endfunction
+#
+#		function defaulttitle(obj, title)
+#			fputs(obj.gp, sprintf("set title \"%s\"\n", title));
+#		endfunction
+
+		function export(obj, file, term, options)
+			obj.plt.export(file, term, options);
+		endfunction
+
+		##--------------------------------------------------------------
+		## Plotdef functions to be delegated to the default plot
+		##--------------------------------------------------------------
+
 		function plot(obj, D, style="")
 			obj.plt.plot(D, style);
 		endfunction
@@ -51,25 +75,25 @@ classdef gnuplotter < handle
 			obj.plt.doplot();
 		endfunction
 
-		function defaultxlabel(obj, label)
-			fputs(obj.gp, sprintf("set xlabel \"%s\"\n", label));
+		function xlabel(obj, label)
+			obj.plt.xlabel(label);
 		endfunction
 
-		function defaultylabel(obj, label)
-			fputs(obj.gp, sprintf("set ylabel \"%s\"\n", label));
+		function ylabel(obj, label)
+			obj.plt.ylabel(label);
 		endfunction
 
-		function defaulttitle(obj, title)
-			fputs(obj.gp, sprintf("set title \"%s\"\n", title));
-		endfunction
-
-		function export(obj, file, term, options)
-			obj.plt.export(file, term, options);
+		function title(obj, title)
+			obj.plt.title(title);
 		endfunction
 
 		function disp(obj)
 			disp("gnuplotter");
 		endfunction
+
+		##--------------------------------------------------------------
+		## End of delegated plotdef functions
+		##--------------------------------------------------------------
 
 		## DEPRECATED. Will be renamed to 'delete' in future release, once
 		## the destructor methods on classdef objects work correctly

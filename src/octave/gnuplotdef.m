@@ -5,8 +5,13 @@ classdef gnuplotdef < handle
 	endproperties
 
 	methods
-		function obj = gnuplotdef(gnuplotprocess)
-			obj.gp = gnuplotprocess;
+		function obj = gnuplotdef(p)
+			if (!isscalar(p))
+				error("gnuplotdef: wrong type argument: '%s'", typeinfo(p));
+			elseif (!is_valid_file_id(p))
+				error("'%d' is not a valid stream number", p);
+			endif
+			obj.gp = p;
 		endfunction
 
 		function plot(obj, D, style="")

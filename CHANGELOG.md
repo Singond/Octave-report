@@ -2,6 +2,12 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
+Unreleased
+----------
+### Fixed
+- Corrected an error in the `test/writetable.m` test script.
+  This was an internal error which appeared only in testing.
+
 [0.2.0] - 2019-05-05
 --------------------
 **Important:** Package name has been changed from `gnuplotter` to `report`.

@@ -22,6 +22,6 @@ data = [
 ];
 
 format = "%.0f %3.0f %4.2f %4.2f %4.1f %5.3f";
-dlmprintf(stdout, format, data, ' | ', header);
-csvprintf(stdout, format, data, header);
-csvprintf("writetable.csv", format, data, header);
+dlmformat(stdout, format, data, ' | ', header);
+csvformat(stdout, format, data, header);
+csvformat("writetable.csv", format, data, header);

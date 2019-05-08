@@ -20,8 +20,12 @@ classdef gnuplotter < handle
 		function obj = gnuplotter()
 			disp("Starting new gnuplot process");
 			obj.gp = popen("gnuplot", "w");
-			obj.plt = gnuplotdef(obj.gp);
-			obj.allplots = [obj.allplots {obj.plt}];
+			obj.plt = obj.newplot();
+		endfunction
+
+		function p = newplot(obj)
+			p = gnuplotdef(obj.gp);
+			obj.allplots = [obj.allplots {p}];
 		endfunction
 
 		## usage: exec(command)

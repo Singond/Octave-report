@@ -58,9 +58,12 @@ classdef gnuplotter < handle
 #			fputs(obj.gp, sprintf("set title \"%s\"\n", title));
 #		endfunction
 
-		function multiplot(obj, r, c, s)
-			if (!exist(s) || !ischar(s))
-				s = "";
+		function multiplot(obj, r, c, s="")
+			if (nargin < 2)
+				print_usage();
+				return;
+			elseif (nargin == 2)
+				c = r;
 			endif
 			fprintf(obj.gp, "set multiplot layout %d,%d %s\n", r, c, s);
 		endfunction

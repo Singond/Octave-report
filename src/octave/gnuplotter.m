@@ -58,6 +58,17 @@ classdef gnuplotter < handle
 #			fputs(obj.gp, sprintf("set title \"%s\"\n", title));
 #		endfunction
 
+		function multiplot(obj, r, c, s)
+			if (!exist(s) || !ischar(s))
+				s = "";
+			endif
+			fprintf(obj.gp, "set multiplot layout %d,%d %s\n", r, c, s);
+		endfunction
+
+		function singleplot(obj)
+			fprintf(obj.gp, "unset multiplot\n");
+		endfunction
+
 		function export(obj, file, term, options)
 			obj.plt.export(file, term, options);
 		endfunction

@@ -19,13 +19,12 @@ p2.plot([x cos(x)  ./x], "w l title 'cosc(x)'  ls 1");
 p2.plot([x cos(2*x)./x], "w l title 'cosc(2x)' ls 2");
 
 ## Execute the plot
-gp.exec("set multiplot layout 2,1 title \
-'Multiplot created by separate plot definitions'");
+gp.multiplot(2, 1, "title 'Multiplot created by separate plot definitions'");
 gp.title("Cardinal sine");
 gp.doplot();
 gp.title('\"Cardinal cosine\" (term not actually used)');
 p2.doplot();
-gp.exec("unset multiplot");
+gp.singleplot();
 
 pause();
 gp.deletex();

@@ -72,13 +72,21 @@ classdef gnuplotter < handle
 			fprintf(obj.gp, "unset multiplot\n");
 		endfunction
 
-		function export(obj, file, term, options)
-			obj.plt.export(file, term, options);
-		endfunction
-
 		##--------------------------------------------------------------
 		## Plotdef functions to be delegated to the default plot
 		##--------------------------------------------------------------
+
+		function xlabel(obj, label)
+			obj.plt.xlabel(label);
+		endfunction
+
+		function ylabel(obj, label)
+			obj.plt.ylabel(label);
+		endfunction
+
+		function title(obj, title)
+			obj.plt.title(title);
+		endfunction
 
 		function plot(obj, D, style="")
 			obj.plt.plot(D, style);
@@ -93,16 +101,8 @@ classdef gnuplotter < handle
 			obj.plt.doplot();
 		endfunction
 
-		function xlabel(obj, label)
-			obj.plt.xlabel(label);
-		endfunction
-
-		function ylabel(obj, label)
-			obj.plt.ylabel(label);
-		endfunction
-
-		function title(obj, title)
-			obj.plt.title(title);
+		function export(obj, file, term, options)
+			obj.plt.export(file, term, options);
 		endfunction
 
 		function disp(obj)

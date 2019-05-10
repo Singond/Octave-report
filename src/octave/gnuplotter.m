@@ -122,7 +122,7 @@ classdef gnuplotter < handle
 					options = "";
 				endif
 			else
-				pd = obj.gp;
+				pd = obj.plt;
 				file = a;
 				term = b;
 				if (nargin > 3)

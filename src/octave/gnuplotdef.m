@@ -1,17 +1,13 @@
 classdef gnuplotdef < handle
 	properties (Access = private)
-		gp
 		plots = cell(0,2)
+		_title
+		_xlabel
+		_ylabel
 	endproperties
 
 	methods
-		function obj = gnuplotdef(p)
-			if (!isscalar(p))
-				error("gnuplotdef: wrong type argument: '%s'", typeinfo(p));
-			elseif (!is_valid_file_id(p))
-				error("'%d' is not a valid stream number", p);
-			endif
-			obj.gp = p;
+		function obj = gnuplotdef()
 		endfunction
 
 		function plot(obj, D, style="")
@@ -23,7 +19,37 @@ classdef gnuplotdef < handle
 		endfunction
 
 		## Draws plot according to specifications and data given in `plot`.
-		function doplot(obj)
+		function doplot(obj, fid)
+			obj.outputtext(fid);
+			obj.outputplot(fid);
+		endfunction
+
+		function xlabel(obj, label)
+			obj._xlabel = label;
+		endfunction
+
+		function ylabel(obj, label)
+			obj._ylabel = label;
+		endfunction
+
+		function title(obj, title)
+			obj._title = title;
+		endfunction
+
+		function disp(obj)
+			disp("gnuplotdef");
+		endfunction
+	endmethods
+
+	methods (Access = private)
+		function outputtext(obj, fid)
+			fprintf(fid, "set title \"%s\"\n", obj._title);
+			fprintf(fid, "set xlabel \"%s\"\n", obj._xlabel);
+			fprintf(fid, "set ylabel \"%s\"\n", obj._ylabel);
+		endfunction
+
+		## Outputs plot according to specifications and data given in `plots`.
+		function outputplot(obj, fid)
 			if (rows(obj.plots) < 1)
 				disp("Nothing to plot");
 				return;
@@ -48,35 +74,9 @@ classdef gnuplotdef < handle
 				endif
 			endfor
 #			disp([plotstring "\n"]);
-			fputs(obj.gp, [plotstring(1:end-2) "\n"]);
+			fputs(fid, [plotstring(1:end-2) "\n"]);
 #			disp(datastring);
-			fputs(obj.gp, datastring);
+			fputs(fid, datastring);
 		endfunction
-
-		function xlabel(obj, label)
-			fputs(obj.gp, sprintf("set xlabel \"%s\"\n", label));
-		endfunction
-
-		function ylabel(obj, label)
-			fputs(obj.gp, sprintf("set ylabel \"%s\"\n", label));
-		endfunction
-
-		function title(obj, title)
-			fputs(obj.gp, sprintf("set title \"%s\"\n", title));
-		endfunction
-
-		function export(obj, file, term, options)
-			fputs(obj.gp, "set terminal push\n");
-			fputs(obj.gp, sprintf("set terminal %s %s\n", term, options));
-			fputs(obj.gp, sprintf("set output \"%s\"\n", file));
-			obj.doplot();
-			fputs(obj.gp, "set output\n");
-			fputs(obj.gp, "set terminal pop\n");
-		endfunction
-
-		function disp(obj)
-			disp("gnuplotdef");
-		endfunction
-
 	endmethods
 endclassdef

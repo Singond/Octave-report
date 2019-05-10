@@ -23,7 +23,7 @@ gp.multiplot(2, 1, "title 'Multiplot created by separate plot definitions'");
 gp.title("Cardinal sine");
 gp.doplot();
 gp.title('\"Cardinal cosine\" (term not actually used)');
-p2.doplot();
+gp.doplot(p2);
 gp.singleplot();
 
 pause();

@@ -24,7 +24,7 @@ classdef gnuplotter < handle
 		endfunction
 
 		function p = newplot(obj)
-			p = gnuplotdef(obj.gp);
+			p = gnuplotdef();
 			obj.allplots = [obj.allplots {p}];
 		endfunction
 
@@ -72,6 +72,50 @@ classdef gnuplotter < handle
 			fprintf(obj.gp, "unset multiplot\n");
 		endfunction
 
+		function doplot(obj, plotdef)
+			if (nargin == 1)
+				obj.plt.doplot(obj.gp);
+			elseif (nargin >= 2)
+				if (!isa(plotdef, "gnuplotdef"))
+					error("Expecting gnuplotdef, got %s", typeinfo(plotdef));
+				endif
+				plotdef.doplot(obj.gp);
+			endif
+		endfunction
+
+		function export(obj, a, b, c, d)
+			if (nargin < 3)
+				error("Need at least two arguments");
+			elseif (isa(a, "gnuplotdef"))
+				if (nargin < 4)
+					error("Missing 'term' argument");
+				endif
+				pd = a;
+				file = b;
+				term = c;
+				if (nargin > 4)
+					options = d;
+				else
+					options = "";
+				endif
+			else
+				pd = obj.gp;
+				file = a;
+				term = b;
+				if (nargin > 3)
+					options = c;
+				else
+					options = "";
+				endif
+			endif
+			fputs(obj.gp, "set terminal push\n");
+			fputs(obj.gp, sprintf("set terminal %s %s\n", term, options));
+			fputs(obj.gp, sprintf("set output \"%s\"\n", file));
+			pd.doplot(obj.gp);
+			fputs(obj.gp, "set output\n");
+			fputs(obj.gp, "set terminal pop\n");
+		endfunction
+
 		##--------------------------------------------------------------
 		## Plotdef functions to be delegated to the default plot
 		##--------------------------------------------------------------
@@ -94,15 +138,6 @@ classdef gnuplotter < handle
 
 		function clearplot(obj)
 			obj.plt.clearplot();
-		endfunction
-
-		## Draws plot according to specifications and data given in `plot`.
-		function doplot(obj)
-			obj.plt.doplot();
-		endfunction
-
-		function export(obj, file, term, options)
-			obj.plt.export(file, term, options);
 		endfunction
 
 		function disp(obj)

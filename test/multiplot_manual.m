@@ -17,11 +17,11 @@ z = cos(x) ./ x;
 z2 = cos(2*x) ./ x;
 
 gp.exec("set multiplot layout 2,1");
-gp.title("Cardinal sine");
+gp.settitle("Cardinal sine");
 gp.exec("plot '-' w l title 'sinc(x)' ls 1, '-' w l title 'sinc(2x)' ls 2");
 gp.data([x y]);
 gp.data([x y2]);
-gp.title('\"Cardinal cosine\" (term not actually used)');
+gp.settitle('\"Cardinal cosine\" (term not actually used)');
 gp.exec("plot '-' w l title 'cosc(x)' ls 1, '-' w l title 'cosc(2x)' ls 2");
 gp.data([x z]);
 gp.data([x z2]);

@@ -44,7 +44,7 @@ classdef gnuplotter < handle
 		endfunction
 
 		##--------------------------------------------------------------
-		## Plotting primitives
+		## Gnuplot primitives
 		##--------------------------------------------------------------
 
 		## usage: exec(command)
@@ -77,23 +77,43 @@ classdef gnuplotter < handle
 			fprintf(obj.gp, "set ylabel \"%s\"\n", label);
 		endfunction
 
-		##--------------------------------------------------------------
-		## High-level functions
-		##--------------------------------------------------------------
-
-		function multiplot(obj, r, c, s="")
+		function multiplot(obj, a, b, c)
 			if (nargin < 2)
-				print_usage();
+				error("Not enough arguments");
+				#print_usage();     # Not working in classdef?
 				return;
-			elseif (nargin == 2)
-				c = r;
+			elseif (isnumeric(a))
+				rows = a;
+				cols = rows;
+				cmd = "";
+				if (nargin > 2)
+					if (isnumeric(b))
+						cols = b;
+					elseif (ischar(b))
+						cmd = b;
+					else
+						#arg error
+					endif
+				elseif(nargin == 4)
+					cols = b;
+					cmd = c;
+				else
+					#arg error
+				endif
+				fprintf(obj.gp, "set multiplot layout %d,%d %s\n", ...
+						rows, cols, cmd);
+			else
+				#arg error
 			endif
-			fprintf(obj.gp, "set multiplot layout %d,%d %s\n", r, c, s);
 		endfunction
 
 		function singleplot(obj)
 			fprintf(obj.gp, "unset multiplot\n");
 		endfunction
+
+		##--------------------------------------------------------------
+		## High-level functions
+		##--------------------------------------------------------------
 
 		function doplot(obj, plotdef)
 			if (nargin == 1)

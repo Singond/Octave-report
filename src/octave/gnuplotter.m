@@ -14,6 +14,8 @@ classdef gnuplotter < handle
 		plt
 		## A list of all plotdefs sharing this gnuplot process
 		allplots = cell();
+		## Plots to be plotted in multiplot
+		mplot
 	endproperties
 
 	methods
@@ -58,18 +60,65 @@ classdef gnuplotter < handle
 #			fputs(obj.gp, sprintf("set title \"%s\"\n", title));
 #		endfunction
 
-		function multiplot(obj, r, c, s="")
+		function multiplot(obj, a, b, c)
 			if (nargin < 2)
-				print_usage();
+				error("Not enough arguments");
+				#print_usage();     # Not working in classdef?
 				return;
-			elseif (nargin == 2)
-				c = r;
+			elseif (isinteger(a))
+				## First form: only set layout grid
+				rows = a;
+				cols = rows;
+				cmd = "";
+				if (nargin > 2)
+					if (isinteger(b))
+						cols = b;
+					elseif (ischar(b))
+						cmd = b;
+					else
+						#arg error
+					endif
+				elseif(nargin == 4)
+					cols = b;
+					cmd = c;
+				else
+					#arg error
+				endif
+				fprintf(obj.gp, "set multiplot layout %d,%d %s\n", ...
+						rows, columns, cmd);
+			elseif (iscell(a))
+				## Set plot definitions as individual plots
+				if (nargin == 2)
+					cmd = "";
+				elseif(nargin == 3)
+					cmd = b;
+				else
+					#arg error
+				endif
+				s = size(a);
+				if (length(s) != 2)
+					error("cell must be a 2D cell array");
+				endif
+				fprintf(obj.gp, "set multiplot layout %d,%d %s\n", ...
+						s(1), s(2), cmd);
+				obj.mplot = a;
+			else
+				#arg error
 			endif
-			fprintf(obj.gp, "set multiplot layout %d,%d %s\n", r, c, s);
 		endfunction
 
 		function singleplot(obj)
 			fprintf(obj.gp, "unset multiplot\n");
+			clear obj.mplot;
+		endfunction
+
+		## Draws plot according to specifications and data given in `plot`.
+		function doplot(obj)
+			if (obj.mplot)
+				## Do multiplot
+			else
+				obj.plt.doplot();
+			endif
 		endfunction
 
 		##--------------------------------------------------------------
@@ -94,11 +143,6 @@ classdef gnuplotter < handle
 
 		function clearplot(obj)
 			obj.plt.clearplot();
-		endfunction
-
-		## Draws plot according to specifications and data given in `plot`.
-		function doplot(obj)
-			obj.plt.doplot();
 		endfunction
 
 		function export(obj, file, term, options)

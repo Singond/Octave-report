@@ -19,8 +19,8 @@ classdef gnuplotdef < handle
 		endfunction
 
 		## Draws plot according to specifications and data given in `plot`.
-		function doplot(obj, fid)
-			obj.outputtext(fid);
+		function doplot(obj, gp, fid)
+			obj.outputtext(gp);
 			obj.outputplot(fid);
 		endfunction
 
@@ -42,10 +42,10 @@ classdef gnuplotdef < handle
 	endmethods
 
 	methods (Access = private)
-		function outputtext(obj, fid)
-			fprintf(fid, "set title \"%s\"\n", obj._title);
-			fprintf(fid, "set xlabel \"%s\"\n", obj._xlabel);
-			fprintf(fid, "set ylabel \"%s\"\n", obj._ylabel);
+		function outputtext(obj, gp)
+			gp.settitle(obj._title);
+			gp.setxlabel(obj._xlabel);
+			gp.setylabel(obj._ylabel);
 		endfunction
 
 		## Outputs plot according to specifications and data given in `plots`.

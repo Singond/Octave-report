@@ -28,6 +28,25 @@ classdef gnuplotter < handle
 			obj.allplots = [obj.allplots {p}];
 		endfunction
 
+		## DEPRECATED. Will be renamed to 'delete' in future release, once
+		## the destructor methods on classdef objects work correctly
+		## (this may already be true in Octave 5).
+		## In Octave version 4.4, renaming this method to 'delete' and calling
+		## it implicitly by the 'clear' command does not work, because the 'gp'
+		## field is destroyed even before invoking 'delete'.
+		function deletex(obj)
+			for i = 1:length(obj.allplots)
+				clear obj.allplots{i};
+			endfor
+			disp("Closing gnuplotter");
+			fputs(obj.gp, "exit\n");
+			pclose(obj.gp);
+		endfunction
+
+		##--------------------------------------------------------------
+		## Plotting primitives
+		##--------------------------------------------------------------
+
 		## usage: exec(command)
 		##
 		## Executes arbitraty gnuplot command.
@@ -46,17 +65,21 @@ classdef gnuplotter < handle
 			fputs(obj.gp, "e\n");
 		endfunction
 
-#		function defaultxlabel(obj, label)
-#			fputs(obj.gp, sprintf("set xlabel \"%s\"\n", label));
-#		endfunction
-#
-#		function defaultylabel(obj, label)
-#			fputs(obj.gp, sprintf("set ylabel \"%s\"\n", label));
-#		endfunction
-#
-#		function defaulttitle(obj, title)
-#			fputs(obj.gp, sprintf("set title \"%s\"\n", title));
-#		endfunction
+		function settitle(obj, title)
+			fprintf(obj.gp, "set title \"%s\"\n", title);
+		endfunction
+
+		function setxlabel(obj, label)
+			fprintf(obj.gp, "set xlabel \"%s\"\n", label);
+		endfunction
+
+		function setylabel(obj, label)
+			fprintf(obj.gp, "set ylabel \"%s\"\n", label);
+		endfunction
+
+		##--------------------------------------------------------------
+		## High-level functions
+		##--------------------------------------------------------------
 
 		function multiplot(obj, r, c, s="")
 			if (nargin < 2)
@@ -74,12 +97,12 @@ classdef gnuplotter < handle
 
 		function doplot(obj, plotdef)
 			if (nargin == 1)
-				obj.plt.doplot(obj.gp);
+				obj.plt.doplot(obj, obj.gp);
 			elseif (nargin >= 2)
 				if (!isa(plotdef, "gnuplotdef"))
 					error("Expecting gnuplotdef, got %s", typeinfo(plotdef));
 				endif
-				plotdef.doplot(obj.gp);
+				plotdef.doplot(obj, obj.gp);
 			endif
 		endfunction
 
@@ -111,7 +134,7 @@ classdef gnuplotter < handle
 			fputs(obj.gp, "set terminal push\n");
 			fputs(obj.gp, sprintf("set terminal %s %s\n", term, options));
 			fputs(obj.gp, sprintf("set output \"%s\"\n", file));
-			pd.doplot(obj.gp);
+			pd.doplot(obj, obj.gp);
 			fputs(obj.gp, "set output\n");
 			fputs(obj.gp, "set terminal pop\n");
 		endfunction
@@ -142,25 +165,6 @@ classdef gnuplotter < handle
 
 		function disp(obj)
 			disp("gnuplotter");
-		endfunction
-
-		##--------------------------------------------------------------
-		## End of delegated plotdef functions
-		##--------------------------------------------------------------
-
-		## DEPRECATED. Will be renamed to 'delete' in future release, once
-		## the destructor methods on classdef objects work correctly
-		## (this may already be true in Octave 5).
-		## In Octave version 4.4, renaming this method to 'delete' and calling
-		## it implicitly by the 'clear' command does not work, because the 'gp'
-		## field is destroyed even before invoking 'delete'.
-		function deletex(obj)
-			for i = 1:length(obj.allplots)
-				clear obj.allplots{i};
-			endfor
-			disp("Closing gnuplotter");
-			fputs(obj.gp, "exit\n");
-			pclose(obj.gp);
 		endfunction
 	endmethods
 

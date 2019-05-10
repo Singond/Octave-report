@@ -7,8 +7,8 @@ addpath("../src/octave");
 gp = gnuplotter();
 gp.load("header.gp");
 #gp.title("Cardinal trigonometric functions");
-gp.xlabel("Angle");
-gp.ylabel("Value");
+gp.setxlabel("Angle");
+gp.setylabel("Value");
 
 x = (1:0.1:10)';
 y = sin(x) ./ x;

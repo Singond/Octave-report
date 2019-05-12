@@ -119,10 +119,28 @@ classdef gnuplotter < handle
 			if (nargin == 1)
 				obj.plt.doplot(obj, obj.gp);
 			elseif (nargin >= 2)
-				if (!isa(plotdef, "gnuplotdef"))
+				if (iscell(plotdef))
+					if (nargin == 2)
+						cmd = "";
+#					elseif(nargin == 3)
+#						cmd = b;
+					else
+						#arg error
+					endif
+					s = size(plotdef);
+					if (length(s) != 2)
+						error("'plotdef' must be a 2D cell array, got %s", ...
+							typeinfo(plotdef));
+					endif
+					obj.multiplot(s(1), s(2), cmd);
+					for pd = plotdef'(:)'
+						pd{1}.doplot(obj, obj.gp);
+					endfor
+				elseif (isa(plotdef, "gnuplotdef"))
+					plotdef.doplot(obj, obj.gp);
+				else
 					error("Expecting gnuplotdef, got %s", typeinfo(plotdef));
 				endif
-				plotdef.doplot(obj, obj.gp);
 			endif
 		endfunction
 

@@ -23,7 +23,7 @@ p2.plot([x cos(x)  ./x], "w l title 'cosc(x)'  ls 1");
 p2.plot([x cos(2*x)./x], "w l title 'cosc(2x)' ls 2");
 
 ## Execute the plot
-gp.doplot({p1; p2});
+gp.doplot({p1; p2}, "title 'Cardinal trigonometric functions'");
 
 pause();
 gp.deletex();

@@ -86,7 +86,7 @@ classdef gnuplotter < handle
 				rows = a;
 				cols = rows;
 				cmd = "";
-				if (nargin > 2)
+				if (nargin == 3)
 					if (isnumeric(b))
 						cols = b;
 					elseif (ischar(b))
@@ -115,15 +115,15 @@ classdef gnuplotter < handle
 		## High-level functions
 		##--------------------------------------------------------------
 
-		function doplot(obj, plotdef)
+		function doplot(obj, plotdef, varargin)
 			if (nargin == 1)
 				obj.plt.doplot(obj, obj.gp);
 			elseif (nargin >= 2)
 				if (iscell(plotdef))
 					if (nargin == 2)
 						cmd = "";
-#					elseif(nargin == 3)
-#						cmd = b;
+					elseif(length(varargin) == 1)
+						cmd = varargin{1};
 					else
 						#arg error
 					endif

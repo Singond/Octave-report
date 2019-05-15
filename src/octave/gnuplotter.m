@@ -138,6 +138,11 @@ classdef gnuplotter < handle
 					endfor
 				elseif (isa(plotdef, "gnuplotdef"))
 					plotdef.doplot(obj, obj.gp);
+					if (!isempty(varargin))
+						for arg = varargin(:)'
+							arg{1}.doplot(obj, obj.gp);
+						endfor
+					endif
 				else
 					error("Expecting gnuplotdef, got %s", typeinfo(plotdef));
 				endif

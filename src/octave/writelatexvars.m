@@ -8,6 +8,14 @@
 ## @var{file} can be a filename or a file handle. If it is a filename, a file
 ## with this name is written.
 ##
+## @var{V} is a (scalar) structure containing the variables to be exported,
+## with each variable as a single field. The fieldnames become the names
+## of the exported variables.
+## The value can be any scalar or string. Strings are exported as-is, while
+## other values are formatted depending on their type.
+##
+## It is worth noting that if none of the available formats is desirable,
+## one can still format the variable as needed and store it as a string.
 ## @end deftypefn
 function writelatexvars(file, V)
 	% Get file handle
@@ -24,6 +32,7 @@ function writelatexvars(file, V)
 
 #	imagunit = '\mathrm{i}';
 	imagunit = 'i';
+
 	if (isstruct(V))
 		if (length(V) > 1)
 			error(["The input must be a scalar structure, " ...
@@ -33,9 +42,7 @@ function writelatexvars(file, V)
 		for [val, name] = V;
 			% TODO Handle different types
 			if (isscalar(val))
-				if (isinteger(val))
-					valstr = sprintf("%d", val);
-				elseif(isreal(val))
+				if(isreal(val))
 					valstr = sprintf("%g", val);
 				elseif(iscomplex(val))
 					valstr = sprintf("%g + %g%s", real(val), imag(val), imagunit);

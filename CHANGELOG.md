@@ -2,8 +2,8 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
-Unreleased
-----------
+[0.3.0] - 2019-05-25
+--------------------
 ### Added
 - The gnuplot bridge now supports separating the plot definition (mainly the
   plot data) into an independent object, which can be reused in multiple

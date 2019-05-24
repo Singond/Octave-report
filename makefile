@@ -1,5 +1,5 @@
 SOURCES := $(shell find src -type f)
-VERSION := 0.2.0
+VERSION := 0.3.0
 PKG_NAME := report
 
 .PHONY: dist clean

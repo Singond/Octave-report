@@ -22,7 +22,7 @@ cd Octave-report/
 make dist
 cd build
 octave
-octave> pkg install "report-0.2.0.tar.gz";
+octave> pkg install "report-0.3.0.tar.gz";
 octave> exit
 ```
 

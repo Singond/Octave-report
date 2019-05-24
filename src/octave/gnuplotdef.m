@@ -1,6 +1,6 @@
 classdef gnuplotdef < handle
 	properties (Access = private)
-		plots = cell(0,2)
+		plots
 		_title
 		_xlabel
 		_ylabel
@@ -8,14 +8,15 @@ classdef gnuplotdef < handle
 
 	methods
 		function obj = gnuplotdef()
+			plots = obj.initplots();
 		endfunction
 
 		function plot(obj, D, style="")
-			obj.plots = [obj.plots; {D style}];
+			obj.plots = [obj.plots; struct("data", D, "style", style)];
 		endfunction
 
 		function clearplot(obj)
-			obj.plots = cell(0,2);
+			obj.plots = obj.initplots();
 		endfunction
 
 		## Draws plot according to specifications and data given in `plot`.
@@ -42,6 +43,10 @@ classdef gnuplotdef < handle
 	endmethods
 
 	methods (Access = private)
+		function P = initplots(obj)
+			P = struct("data", {}, "style", {});
+		endfunction
+
 		function outputtext(obj, gp)
 			gp.settitle(obj._title);
 			gp.setxlabel(obj._xlabel);
@@ -58,8 +63,8 @@ classdef gnuplotdef < handle
 			plotstring = "plot ";
 			datastring = "";
 			for r = 1:rows(obj.plots)
-				plot = obj.plots{r,1};
-				style = obj.plots{r,2};
+				plot = obj.plots(r).data;
+				style = obj.plots(r).style;
 				if (isnumeric(plot))
 					# Data is numeric
 					c = columns(plot);

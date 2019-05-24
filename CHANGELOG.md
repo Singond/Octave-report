@@ -4,9 +4,19 @@ This is a changelog for the Octave `report` package.
 
 Unreleased
 ----------
+### Added
+- The gnuplot bridge now supports separating the plot definition (mainly the
+  plot data) into an independent object, which can be reused in multiple
+  `doplot` invocations. This object aggregates primarily the data points,
+  but can also hold other stuff like plot title and axis labels.
+  For example usage of this feature, see the `test/multiplot_*.m` scripts,
+  which demostrate different ways to produce a multiplot.
+
 ### Fixed
 - Corrected an error in the `test/writetable.m` test script.
   This was an internal error which appeared only in testing.
+- The `writelatexvars` function now supports more types like complex numbers
+  and strings. Also, its documentation has been improved.
 
 [0.2.0] - 2019-05-05
 --------------------

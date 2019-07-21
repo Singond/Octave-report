@@ -2,6 +2,13 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
+[0.3.1] - 2019-07-21
+--------------------
+### Changed
+- In the gnuplot bridge, plot definitions now set the plot title and axis
+  labels only if they have been explicitly set using the `title`, `xlabel`
+  or `ylabel` function, respectively.
+
 [0.3.0] - 2019-05-25
 --------------------
 ### Added

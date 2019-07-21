@@ -1,4 +1,8 @@
 classdef gnuplotdef < handle
+	properties (Constant = true)
+		UNDEFINED = -1
+	endproperties
+
 	properties (Access = private)
 		plots
 		_title
@@ -9,6 +13,9 @@ classdef gnuplotdef < handle
 	methods
 		function obj = gnuplotdef()
 			plots = obj.initplots();
+			_title = obj.UNDEFINED;
+			_xlabel = obj.UNDEFINED;
+			_ylabel = obj.UNDEFINED;
 		endfunction
 
 		function plot(obj, D, style="")
@@ -48,9 +55,15 @@ classdef gnuplotdef < handle
 		endfunction
 
 		function outputtext(obj, gp)
-			gp.settitle(obj._title);
-			gp.setxlabel(obj._xlabel);
-			gp.setylabel(obj._ylabel);
+			if (obj._title != obj.UNDEFINED)
+				gp.settitle(obj._title);
+			endif
+			if (obj._xlabel != obj.UNDEFINED)
+				gp.setxlabel(obj._xlabel);
+			endif
+			if (obj._ylabel != obj.UNDEFINED)
+				gp.setylabel(obj._ylabel);
+			endif
 		endfunction
 
 		## Outputs plot according to specifications and data given in `plots`.

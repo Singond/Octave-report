@@ -18,15 +18,32 @@ classdef gnuplotdef < handle
 			_ylabel = obj.UNDEFINED;
 		endfunction
 
+		## -*- texinfo -*-
+		## @deftypefn  {Method} {} plot(plotdata)
+		## @deftypefnx {Method} {} plot(plotdata, style)
+		## @cindex plotdata the data to be plotted
+		## @cindex style plot style
+		##
+		## Define the plot data and style to be plotted later with
+		## @code{doplot}.
+		##
+		## This function does not interact with gnuplot in any way,
+		## it merely stores the plot definition for later retreival.
 		function plot(obj, D, style="")
 			obj.plots = [obj.plots; struct("data", D, "style", style)];
 		endfunction
 
+		## -*- texinfo -*-
+		## @deftypefn {Method} {} clearplot()
+		## Clear the plot definition given in @code{plot}.
 		function clearplot(obj)
 			obj.plots = obj.initplots();
 		endfunction
 
-		## Draws plot according to specifications and data given in `plot`.
+		## -*- texinfo -*-
+		## @deftypefn {Method} {} doplot(gnuplotter, fid)
+		## Draw plot according to specifications and data given by calling
+		## the @code{plot} function.
 		function doplot(obj, gp, fid)
 			obj.outputtext(gp);
 			obj.outputplot(fid);
@@ -66,20 +83,20 @@ classdef gnuplotdef < handle
 			endif
 		endfunction
 
-		## Outputs plot according to specifications and data given in `plots`.
+		## Output plot according to specifications and data given when calling
+		## @code{plots}.
 		function outputplot(obj, fid)
+			## Return if plots is empty
 			if (rows(obj.plots) < 1)
-				disp("Nothing to plot");
-				return;
+				error("Nothing to plot");
 			endif
-			# Return if plots is empty
 			plotstring = "plot ";
 			datastring = "";
 			for r = 1:rows(obj.plots)
 				plot = obj.plots(r).data;
 				style = obj.plots(r).style;
 				if (isnumeric(plot))
-					# Data is numeric
+					## Data is numeric
 					c = columns(plot);
 					cols = sprintf("%d:", 1:c)(1:end-1);
 					plotstring = [plotstring ...
@@ -87,7 +104,7 @@ classdef gnuplotdef < handle
 					fmt = [repmat('%g ', [1 c])(1:end-1) "\n"];
 					datastring = [datastring sprintf(fmt, plot') "e\n"];
 				elseif (ischar(plot))
-					# Data is function expression
+					## Data is function expression
 					plotstring = [plotstring sprintf("%s %s, ", plot, style)];
 				endif
 			endfor

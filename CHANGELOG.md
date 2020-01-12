@@ -4,6 +4,10 @@ This is a changelog for the Octave `report` package.
 
 [Unreleased]
 ------------
+### Added
+- Added documentation to the `gnuplotdef` object. Currently, it can only
+  bew viewed in the source code, because the `help` function does not
+  support documentation in classdef classes.
 ### Fixed
 - Fixed an error in `writelatexvars` which caused single-character strings
   to be exported as their ASCII codepoint value.

@@ -2,6 +2,12 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
+[Unreleased]
+------------
+### Fixed
+- Fixed an error in `writelatexvars` which caused single-character strings
+  to be exported as their ASCII codepoint value.
+
 [0.3.1] - 2019-07-21
 --------------------
 ### Changed

@@ -41,7 +41,9 @@ function writelatexvars(file, V)
 		% Input is key-value pairs
 		for [val, name] = V;
 			% TODO Handle different types
-			if (isscalar(val))
+			if (ischar(val))
+				valstr = val;
+			elseif (isscalar(val))
 				if(isreal(val))
 					valstr = sprintf("%g", val);
 				elseif(iscomplex(val))
@@ -50,8 +52,6 @@ function writelatexvars(file, V)
 					error("Variable '%s' is of unsupported scalar type (%s)", ...
 						name, typeinfo(val));
 				endif
-			elseif (ischar(val))
-				valstr = val;
 			else
 				error("Variable '%s' is of unsupported type (%s)", ...
 						name, typeinfo(val));

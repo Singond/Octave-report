@@ -2,8 +2,8 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
-[Unreleased]
-------------
+[0.3.2] - 2020-01-12
+--------------------
 ### Added
 - Added documentation to the `gnuplotdef` object. Currently, it can only
   bew viewed in the source code, because the `help` function does not

@@ -18,9 +18,9 @@
 ## one can still format the variable as needed and store it as a string.
 ## @end deftypefn
 function writelatexvars(file, V)
-	% TODO: Handle non-existent directories
 	% Get file handle
 	if (ischar(file))
+		ensure_dir_exists(file);
 		f = fopen(file, "w");
 		fprivate = 1;
 	elseif (is_valid_file_id(file))

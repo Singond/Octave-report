@@ -22,6 +22,20 @@ data = [
 ];
 
 format = "%.0f %3.0f %4.2f %4.2f %4.1f %5.3f";
+
+disp("Writing decorated table to stdout:");
 dlmformat(stdout, format, data, ' | ', header);
+disp("");
+
+disp("Writing CSV table to stdout:");
 csvformat(stdout, format, data, header);
-csvformat("writetable.csv", format, data, header);
+disp("");
+
+disp("Writing CSV table to test_output/writetable.csv");
+csvformat("test_output/writetable.csv", format, data, header);
+disp("");
+
+filename = [non_existent_dir "/writetable.csv"];
+printf("Writing CSV table to %s\n", filename);
+csvformat(filename, format, data, header);
+disp("");

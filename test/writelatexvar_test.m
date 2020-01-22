@@ -5,7 +5,7 @@ R.threenum = 3;
 R.threestr = "3";
 R.fiftyfivenum = 55;
 R.fiftyfivestr = "55";
-writelatexvars("vars.tex", R);
+writelatexvars("test_output/vars.tex", R);
 
 ## Try with non-existent directory
 filename = [non_existent_dir() "/vars.tex"];

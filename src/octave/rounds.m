@@ -17,16 +17,20 @@
 ## -*- texinfo -*-
 ## @deftypefn  {Function file} {@var{r} =} rounds(@var{x}, @var{digits})
 ## @deftypefnx {Function file} {@var{r} =} rounds(@var{x})
+## @deftypefnx {Function file} {[@var{r}, @var{f}, @var{l}] =} rounds(@dots{})
 ## Round @var{x} to the number of significant digits given by @var{digits}.
 ##
 ## @var{digits} must be either a scalar or a matrix broadcastable to the
 ## same shape as @var{x}. If it is omitted, it defaults to 1.
+##
+## The optional return values @var{f}, @var{l} return the (decimal) order
+## of the first and last non-zero digit in the rounded result, respectively.
 ## @end deftypefn
 
 ## Author: Jan "Singon" Slany <singond@seznam.cz>
 ## Created: January 2020
 ## Keywords: round
-function r = rounds(x, digits)
+function [r, f, l] = rounds(x, digits)
 	if (!isnumeric(x))
 		error("x must be numeric");
 	endif
@@ -41,10 +45,10 @@ function r = rounds(x, digits)
 	sgn = sign(x);
 	x = abs(x);                 # Ensure x is positive
 	f = floor(log10(x));        # Order of the first significant digit
-	s = f - digits + 1;         # Order of the last non-zero digit in result
+	l = f - digits + 1;         # Order of the last non-zero digit in result
 	r = zeros(size(x));
-	M = (s != 0);
-	r(M) = sgn(M) .* round(x(M).*(10.^(-s(M)))) .* 10.^s(M);
+	M = (l != 0);
+	r(M) = sgn(M) .* round(x(M).*(10.^(-l(M)))) .* 10.^l(M);
 	r(!M) = sgn(!M) .* round(x)(!M);
 endfunction
 
@@ -76,3 +80,9 @@ endfunction
 
 %!assert(rounds((1:3)'.*[pi e], [2 3]), [3.1 2.72; 6.3 5.44; 9.4 8.15], eps(10));
 %!assert(rounds((1:3)'.*[pi e], [1 2 3]'), [3 3; 6.3 5.4; 9.42 8.15], eps(10));
+
+%!test
+%! [r, f, l] = rounds(e*1E-4, 3);
+%! assert(r, 2.72E-4);
+%! assert(f, -4);
+%! assert(l, -6);

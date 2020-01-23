@@ -206,8 +206,13 @@ classdef gnuplotter < handle
 			obj.plt.clearplot();
 		endfunction
 
-		function disp(obj)
-			disp("gnuplotter");
+		function str = disp(obj)
+			s = "gnuplotter";
+			if (nargout == 0)
+				disp(s);
+			else
+				str = s;
+			endif
 		endfunction
 	endmethods
 

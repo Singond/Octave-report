@@ -61,8 +61,13 @@ classdef gnuplotdef < handle
 			obj._title = title;
 		endfunction
 
-		function disp(obj)
-			disp("gnuplotdef");
+		function str = disp(obj)
+			print_struct_array_contents(true, "local");
+			if (nargout == 0)
+				disp(obj.plots);
+			else
+				str = disp(obj.plots);
+			endif
 		endfunction
 	endmethods
 

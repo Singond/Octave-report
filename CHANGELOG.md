@@ -12,6 +12,8 @@ This is a changelog for the Octave `report` package.
 - Specifying a path to a non-existent directory in `writelatexvars`,
   `dlmformat`, or `csvformat` should now correctly create the directory
   before attempting to write the file.
+- The `disp` function of `gnuplotter` and `gnuplotdef` can now properly
+  return values instead of printing.
 
 [0.3.2] - 2020-01-12
 --------------------

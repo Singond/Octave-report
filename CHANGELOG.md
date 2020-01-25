@@ -8,6 +8,10 @@ This is a changelog for the Octave `report` package.
   information on how to include it in a LaTeX file and how it was created.
 - New function `rounds` now enables rounding to a given number of significant
   digits.
+### Changed
+- Functions `dlmformat` and `csvformat` now allow specifying the format
+  and header in similar ways: either as cell array, or as space-separated
+  string.
 ### Fixed
 - Specifying a path to a non-existent directory in `writelatexvars`,
   `dlmformat`, or `csvformat` should now correctly create the directory

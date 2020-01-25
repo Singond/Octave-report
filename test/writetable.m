@@ -2,6 +2,7 @@ clear all;
 addpath("../src/octave");
 
 header = {"g", "Ua[V]", "I10[microA]", "I12[microA]", "Ia[microA]", "s"};
+header_str = "g Ua[V] I10[microA] I12[microA] Ia[microA] s";
 data = [
 	1, 600, 0.08, 0.82,  5.0, 3.2016;
 	2, 600, 0.07, 0.71,  4.0, 3.1848;
@@ -21,10 +22,15 @@ data = [
 	8, 795, 0.09, 1.58, 14.0, 4.1899
 ];
 
-format = "%.0f %3.0f %4.2f %4.2f %4.1f %5.3f";
+format = {"%.0f", "%3.0f", "%4.2f", "%4.2f", "%4.1f", "%5.3f"};
+format_str = "%.0f %3.0f %4.2f %4.2f %4.1f %5.3f";
 
 disp("Writing decorated table to stdout:");
 dlmformat(stdout, format, data, ' | ', header);
+disp("");
+
+disp("Writing table to stdout using string arguments for header and format:");
+dlmformat(stdout, format_str, data, '  ', header_str);
 disp("");
 
 disp("Writing CSV table to stdout:");

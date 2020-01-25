@@ -1,18 +1,21 @@
 ## -*- texinfo -*-
 ## @deftypefn {Function File} {} dlmformat(@var{file}, @var{format}, @var{M}, @var{dlm}, @var{h})
-##
-## Export numeric array @var{M} to delimiter separated values with a header
-## @var{H} to @var{file}.
+## Export numeric array @var{M} to delimiter-separated values format
+## with header @var{h} to @var{file}.
 ##
 ## @var{file} can be a filename or a file handle. If it is a filename, a file
 ## with this name is written.
 ##
 ## The individual cells are formatted according to @var{format}. This is
-## a space-separated string containing a format string for each column.
-## This argument is split at spaces, a delimiter @var{dlm} is inserted
-## between them and a newline is appended to the end. Care must be taken
-## to ensure that the number of elements matches the number of columns in
-## the input matrix @var{M}.
+## a cell array of @code{printf}-style format strings to be applied to the
+## data. The size of this cell array must be equal to the number of columns
+## in @var{M}. The formatted cells are separated by @var{dlm}.
+##
+## Column headers can be specified using @var{h}, which is is a cell array
+## of strings.
+##
+## Both @var{format} and @var{header} can be also specified as a plain string.
+## In that case, the string is split at whitespace into elements.
 ## @end deftypefn
 function dlmformat(file, format, M, dlm, H)
 	## Make sure 'file' is a valid file handle
@@ -25,10 +28,16 @@ function dlmformat(file, format, M, dlm, H)
 		localhandle = 1;
 	endif
 
-	## Build format for header and data
-
-	cellformat = strsplit(format);              # Format of individual cells
-	c = length(cellformat);                     # Number of columns
+	## Parse format and header to individual elements
+	format = makecell(format);              # Format of individual cells
+	H = makecell(H);                        # Header of individual columns
+	c = columns(M);                         # Number of columns
+	if (length(format) != c)
+		error("Data has %d columns, but format has %d parts", c, length(format));
+	endif
+	if (length(H) != c)
+		error("Data has %d columns, but header has %d parts", c, length(H));
+	endif
 
 	## Calculate width of each column
 	## To avoid reading all data, consider only the header and first data row
@@ -36,7 +45,7 @@ function dlmformat(file, format, M, dlm, H)
 	dataformatline = "";
 	delim = dlm;
 	for i = 1:c
-		datafmt = cellformat{i};
+		datafmt = format{i};
 		datastr = sprintf(datafmt, M(1,i));
 		headerstr = H{i};
 		colwidth = max([length(datastr), length(headerstr)]);
@@ -57,5 +66,13 @@ function dlmformat(file, format, M, dlm, H)
 	## Clean up resources
 	if (localhandle)
 		fclose(file);
+	endif
+endfunction
+
+function C = makecell(a)
+	if (iscell(a))
+		C = a;
+	elseif (ischar(a))
+		C = strsplit(a);
 	endif
 endfunction

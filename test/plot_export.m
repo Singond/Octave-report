@@ -17,4 +17,7 @@ gp.exec("set border 3");
 gp.export("sinc.eps", "eps", "size 16cm,8cm");
 # Execute arbitrary command to test if export has been closed
 gp.exec("clear");
+
+## Export to non-existent directory
+gp.export([non_existent_dir "/sinc.eps"], "eps", "size 16cm,8cm");
 gp.deletex();

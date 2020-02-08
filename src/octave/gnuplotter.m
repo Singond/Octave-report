@@ -174,6 +174,9 @@ classdef gnuplotter < handle
 					options = "";
 				endif
 			endif
+			if (ischar(file))
+				ensure_dir_exists(file);
+			endif
 			fputs(obj.gp, "set terminal push\n");
 			fputs(obj.gp, sprintf("set terminal %s %s\n", term, options));
 			fputs(obj.gp, sprintf("set output \"%s\"\n", file));

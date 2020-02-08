@@ -2,6 +2,12 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
+[Unreleased]
+------------
+### Fixed
+- Using `gnuplotter.export` with non-existent directory will now create the
+  required directory if it does not exist.
+
 [0.4.0] - 2020-02-04
 --------------------
 ### Added

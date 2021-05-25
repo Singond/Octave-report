@@ -14,11 +14,27 @@ classdef gnuplotter < handle
 		plt
 		## A list of all plotdefs sharing this gnuplot process
 		allplots = cell();
+		## Gnuplotter verbosity (not verbosity of gnuplot itself!)
+		verbose;
 	endproperties
 
 	methods
-		function obj = gnuplotter()
-			disp("Starting new gnuplot process");
+		## fun
+		function obj = gnuplotter(varargin)
+			ip = inputParser();
+			ip.addSwitch("initfile");
+			ip.addSwitch("verbose");
+			ip.parse(varargin{:});
+			ipr = ip.Results;
+			obj.verbose = ipr.verbose;
+
+			cmd = "gnuplot";
+			if (!ipr.initfile)
+				cmd = [cmd " --default"];
+			endif
+			if (obj.verbose)
+				disp("Starting new gnuplot process");
+			endif
 			obj.gp = popen("gnuplot", "w");
 			obj.plt = obj.newplot();
 		endfunction
@@ -38,7 +54,9 @@ classdef gnuplotter < handle
 			for i = 1:length(obj.allplots)
 				clear obj.allplots{i};
 			endfor
-			disp("Closing gnuplotter");
+			if (obj.verbose)
+				disp("Closing gnuplotter");
+			endif
 			fputs(obj.gp, "exit\n");
 			pclose(obj.gp);
 		endfunction

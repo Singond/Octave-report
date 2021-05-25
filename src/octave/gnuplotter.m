@@ -44,13 +44,10 @@ classdef gnuplotter < handle
 			obj.allplots = [obj.allplots {p}];
 		endfunction
 
-		## DEPRECATED. Will be renamed to 'delete' in future release, once
-		## the destructor methods on classdef objects work correctly
-		## (this may already be true in Octave 5).
-		## In Octave version 4.4, renaming this method to 'delete' and calling
-		## it implicitly by the 'clear' command does not work, because the 'gp'
+		## In Octave version 4.4, calling this method implicitly
+		## by the 'clear' command does not work, because the 'gp'
 		## field is destroyed even before invoking 'delete'.
-		function deletex(obj)
+		function delete(obj)
 			for i = 1:length(obj.allplots)
 				clear obj.allplots{i};
 			endfor

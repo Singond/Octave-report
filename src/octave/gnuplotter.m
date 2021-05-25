@@ -277,3 +277,36 @@ classdef gnuplotter < handle
 		endfunction
 	endmethods
 endclassdef
+
+##%! gp.exec("set style line 3 lw 2 lc rgb '#4DAF4A' pt 9  ps 2");
+
+%!demo
+%! gp = gnuplotter("verbose");
+%! gp.exec("set style line 1 lw 2 lc rgb '#E41A1C' pt 13 ps 2");
+%! gp.exec("set style line 2 lw 2 lc rgb '#377EB8' pt 5  ps 1.4");
+%! x = 1:0.1:10;
+%! y = sin(x) ./ x;
+%! z = cos(x) ./ x;
+%! gp.plot([x; y]');
+%! gp.plot([x; z]');
+%! gp.doplot;
+%! pause();
+%! clear gp;
+
+%!demo
+%! gp = gnuplotter("verbose");
+%! gp.exec("set style line 1 lw 2 lc rgb '#E41A1C' pt 13 ps 2");
+%! gp.exec("set style line 2 lw 2 lc rgb '#377EB8' pt 5  ps 1.4");
+%! x = 1:0.1:10;
+%! y = sin(x) ./ x;
+%! z = cos(x) ./ x;
+%! gp.plot([x; y]', "w l title 'sinc(x)' ls 1");
+%! gp.plot("1/x", "w l title '1/x' ls 0");
+%! gp.plot("-1/x", "w l title '-1/x' ls 0");
+%! gp.plot([x; z]', "w l title 'cosc(x)' ls 2");
+%! gp.title("Cardinal trigonometric functions");
+%! gp.xlabel("Angle");
+%! gp.ylabel("Value");
+%! gp.doplot;
+%! pause();
+%! clear gp;

@@ -1,11 +1,42 @@
-## Enables controlling Gnuplot from within Octave.
-## While Octave supports Gnuplot natively, it abstracts from its details and makes
-## fine-grained control over the final result difficult. This utility aims to fill
-## this gap by providing more direct control over what is being passed to Gnuplot.
-##
-## Requires `gnuplot` to be installed and available on `PATH`.
-
 classdef gnuplotter < handle
+	## -*- texinfo -*-
+	## @deftp Class gnuplotter
+	## Interface to a Gnuplot process.
+	##
+	## This class enables controlling Gnuplot from within Octave.
+	## While Octave supports Gnuplot natively, it abstracts from its details
+	## and makes fine-grained control over the final result difficult.
+	## This class aims to fill this gap by providing a more direct control
+	## over what is being passed to Gnuplot.
+	##
+	## Requires `gnuplot` to be installed and available on `PATH`.
+	##
+	## @strong{Caution}:
+	## In earlier versions of Octave, removing the object by calling
+	## @code{clear} fails to close the Gnuplot process. In order to avoid
+	## this, the @code{delete} method of @code{gnuplotter} must be called
+	## manually.
+	## This used to be an issue in Octave 4.4, but was fixed at some point
+	## between versions 4.4 and 6.2.
+	## @end deftp
+	##
+	## @deftypefn  Constructor {@var{gp} =} gnuplotter ()
+	## @deftypefnx Constructor {@var{gp} =} gnuplotter @
+	##     (@dots{}, @qcode{"initfile"})
+	## @deftypefnx Constructor {@var{gp} =} gnuplotter @
+	##     (@dots{}, @qcode{"verbose"})
+	## Construct a new @code{gnuplotter} object.
+	##
+	## If the @qcode{"initfile"} switch is given, launch Gnuplot without
+	## the @code{--default} option in order to load initialization files
+	## like @code{~/.gnuplot}.
+	## This used to be the default behaviour in version 0.4.1 of this package
+	## and earlier.
+	##
+	## If the @qcode{"verbose"} switch is set, output some diagnostic messages
+	## from @code{gnuplotter} into standard output.
+	## Note that this does not affect verbosity of Gnuplot itself.
+	## @end deftypefn
 	properties (Access = private)
 		## The gnuplot process
 		gp

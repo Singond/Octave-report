@@ -281,9 +281,8 @@ endclassdef
 ##%! gp.exec("set style line 3 lw 2 lc rgb '#4DAF4A' pt 9  ps 2");
 
 %!demo
+%! # Simple example.
 %! gp = gnuplotter("verbose");
-%! gp.exec("set style line 1 lw 2 lc rgb '#E41A1C' pt 13 ps 2");
-%! gp.exec("set style line 2 lw 2 lc rgb '#377EB8' pt 5  ps 1.4");
 %! x = 1:0.1:10;
 %! y = sin(x) ./ x;
 %! z = cos(x) ./ x;
@@ -291,7 +290,6 @@ endclassdef
 %! gp.plot([x; z]');
 %! gp.doplot;
 %! pause();
-%! clear gp;
 
 %!demo
 %! gp = gnuplotter("verbose");
@@ -309,4 +307,80 @@ endclassdef
 %! gp.ylabel("Value");
 %! gp.doplot;
 %! pause();
-%! clear gp;
+
+%!demo
+%! ## Control gnuplot directly.
+%! gp = gnuplotter("verbose", "initfile");
+%! gp.exec("\
+%!     set style line 1 lt 1 lw 2 lc rgb '#D53E4F' \n\
+%!     set style line 2 lt 1 lw 2 lc rgb '#F46D43' # orange\n\
+%!     set style line 3 lt 1 lw 2 lc rgb '#FDAE61' # pale orange \n\
+%!     set style line 4 lt 1 lw 2 lc rgb '#FEE08B' # pale yellow-orange \n\
+%!     set style line 5 lt 1 lw 2 lc rgb '#E6F598' # pale yellow-green \n\
+%!     set style line 6 lt 1 lw 2 lc rgb '#ABDDA4' # pale green \n\
+%!     set style line 7 lt 1 lw 2 lc rgb '#66C2A5' # green \n\
+%!     set style line 8 lt 1 lw 2 lc rgb '#3288BD' # blue \n\
+%!     set style increment user \n\
+%!     set xlabel 'Angle' \n\
+%!     set ylabel 'Value' \n\
+%!     set yrange [-0.6:1] \n\
+%! ");
+%! x = 0:0.1:12;
+%! d = 0.2;
+%! p = 0.1;
+%! for i = 0:7
+%!     xd = x - i*d;
+%!     y = sin(x-i*d) ./ (x+i*p);
+%!     gp.plot([x; y]', "w l");
+%! endfor
+%! gp.doplot;
+%! pause();
+
+%!demo
+%! # Draw a multiplot using a cell array of plotdef objects.
+%! gp = gnuplotter("verbose");
+%! x = (1:0.1:10)';
+%! p1 = gp.newplot();
+%! p1.plot([x sin(x)  ./x], "w l title 'sinc(x)'  ls 1");
+%! p2 = gp.newplot();
+%! p2.plot([x cos(x)  ./x], "w l title 'cosc(x)'  ls 1");
+%! gp.doplot({p1; p2}, "title 'Simple multiplot'");
+%! pause();
+
+%!demo
+%! # Draw a multiplot with main title, labels, and individual plot titles.
+%! # Also demonstrate the use of 'multiplot' function.
+%! gp = gnuplotter("verbose");
+%! x = (1:0.1:10)';
+%! p1 = gp.newplot();
+%! p1.title("Cardinal sine");
+%! p1.xlabel("Angle");
+%! p1.ylabel("Value");
+%! p1.plot([x sin(x)  ./x], "w l title 'sinc(x)'  ls 1");
+%! p1.plot([x sin(2*x)./x], "w l title 'sinc(2x)' ls 2");
+%! p2 = gp.newplot();
+%! p2.title('\"Cardinal cosine\"');
+%! p2.xlabel("Angle");
+%! p2.ylabel("Value");
+%! p2.plot([x cos(x)  ./x], "w l title 'cosc(x)'  ls 1");
+%! p2.plot([x cos(2*x)./x], "w l title 'cosc(2x)' ls 2");
+%! gp.multiplot(2, 1, "title 'Multiplot created by \"multiplot\" function'");
+%! gp.doplot(p1, p2);
+%! pause();
+
+%!demo
+%! # Draw a multiplot manually.
+%! gp = gnuplotter("verbose");
+%! x = (1:0.1:10)';
+%! y = sin(x) ./ x;
+%! z = cos(x) ./ x;
+%! z2 = cos(2*x) ./ x;
+%! gp.exec("set multiplot layout 2,1");
+%! gp.settitle("Cardinal sine");
+%! gp.exec("plot '-' w l title 'sinc(x)' ls 1");
+%! gp.data([x y]);
+%! gp.settitle('\"Cardinal cosine\"');
+%! gp.exec("plot '-' w l title 'cosc(x)' ls 1, '-' w l title 'cosc(2x)' ls 2");
+%! gp.data([x z]);
+%! gp.data([x z2]);
+%! pause();

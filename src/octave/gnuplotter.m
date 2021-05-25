@@ -28,8 +28,8 @@ classdef gnuplotter < handle
 	## Construct a new @code{gnuplotter} object.
 	##
 	## If the @qcode{"initfile"} switch is given, launch Gnuplot without
-	## the @code{--default} option in order to load initialization files
-	## like @code{~/.gnuplot}.
+	## the @code{--default-settings} option in order to load initialization
+	## files like @code{~/.gnuplot}.
 	## This used to be the default behaviour in version 0.4.1 of this package
 	## and earlier.
 	##
@@ -61,12 +61,12 @@ classdef gnuplotter < handle
 
 			cmd = "gnuplot";
 			if (!ipr.initfile)
-				cmd = [cmd " --default"];
+				cmd = [cmd " --default-settings"];
 			endif
 			if (obj.verbose)
-				disp("Starting new gnuplot process");
+				printf("Starting new gnuplot process with '%s'\n", cmd);
 			endif
-			obj.gp = popen("gnuplot", "w");
+			obj.gp = popen(cmd, "w");
 			obj.plt = obj.newplot();
 		endfunction
 
@@ -83,7 +83,7 @@ classdef gnuplotter < handle
 				clear obj.allplots{i};
 			endfor
 			if (obj.verbose)
-				disp("Closing gnuplotter");
+				disp("Closing gnuplot process");
 			endif
 			fputs(obj.gp, "exit\n");
 			pclose(obj.gp);

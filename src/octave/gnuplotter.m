@@ -278,8 +278,6 @@ classdef gnuplotter < handle
 	endmethods
 endclassdef
 
-##%! gp.exec("set style line 3 lw 2 lc rgb '#4DAF4A' pt 9  ps 2");
-
 %!demo
 %! # Simple example.
 %! gp = gnuplotter("verbose");

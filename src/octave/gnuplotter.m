@@ -247,8 +247,8 @@ classdef gnuplotter < handle
 			obj.plt.title(title);
 		endfunction
 
-		function plot(obj, D, style="")
-			obj.plt.plot(D, style);
+		function plot(obj, varargin)
+			obj.plt.plot(varargin{:});
 		endfunction
 
 		function clearplot(obj)
@@ -284,8 +284,8 @@ endclassdef
 %! x = 1:0.1:10;
 %! y = sin(x) ./ x;
 %! z = cos(x) ./ x;
-%! gp.plot([x; y]');
-%! gp.plot([x; z]');
+%! gp.plot(x, y);
+%! gp.plot(x, z);
 %! gp.doplot;
 %! pause();
 
@@ -296,10 +296,10 @@ endclassdef
 %! x = 1:0.1:10;
 %! y = sin(x) ./ x;
 %! z = cos(x) ./ x;
-%! gp.plot([x; y]', "w l title 'sinc(x)' ls 1");
+%! gp.plot(x, y, "w l title 'sinc(x)' ls 1");
 %! gp.plot("1/x", "w l title '1/x' ls 0");
 %! gp.plot("-1/x", "w l title '-1/x' ls 0");
-%! gp.plot([x; z]', "w l title 'cosc(x)' ls 2");
+%! gp.plot(x, z, "w l title 'cosc(x)' ls 2");
 %! gp.title("Cardinal trigonometric functions");
 %! gp.xlabel("Angle");
 %! gp.ylabel("Value");
@@ -329,7 +329,7 @@ endclassdef
 %! for i = 0:7
 %!     xd = x - i*d;
 %!     y = sin(x-i*d) ./ (x+i*p);
-%!     gp.plot([x; y]', "w l");
+%!     gp.plot(x, y, "w l");
 %! endfor
 %! gp.doplot;
 %! pause();
@@ -339,9 +339,9 @@ endclassdef
 %! gp = gnuplotter("verbose");
 %! x = (1:0.1:10)';
 %! p1 = gp.newplot();
-%! p1.plot([x sin(x)  ./x], "w l title 'sinc(x)'  ls 1");
+%! p1.plot(x, sin(x)./x, "w l title 'sinc(x)'  ls 1");
 %! p2 = gp.newplot();
-%! p2.plot([x cos(x)  ./x], "w l title 'cosc(x)'  ls 1");
+%! p2.plot(x, cos(x)./x, "w l title 'cosc(x)'  ls 1");
 %! gp.doplot({p1; p2}, "title 'Simple multiplot'");
 %! pause();
 
@@ -354,14 +354,14 @@ endclassdef
 %! p1.title("Cardinal sine");
 %! p1.xlabel("Angle");
 %! p1.ylabel("Value");
-%! p1.plot([x sin(x)  ./x], "w l title 'sinc(x)'  ls 1");
-%! p1.plot([x sin(2*x)./x], "w l title 'sinc(2x)' ls 2");
+%! p1.plot(x, sin(x)  ./x, "w l title 'sinc(x)'  ls 1");
+%! p1.plot(x, sin(2*x)./x, "w l title 'sinc(2x)' ls 2");
 %! p2 = gp.newplot();
 %! p2.title('\"Cardinal cosine\"');
 %! p2.xlabel("Angle");
 %! p2.ylabel("Value");
-%! p2.plot([x cos(x)  ./x], "w l title 'cosc(x)'  ls 1");
-%! p2.plot([x cos(2*x)./x], "w l title 'cosc(2x)' ls 2");
+%! p2.plot(x, cos(x)  ./x, "w l title 'cosc(x)'  ls 1");
+%! p2.plot(x, cos(2*x)./x, "w l title 'cosc(2x)' ls 2");
 %! gp.multiplot(2, 1, "title 'Multiplot created by \"multiplot\" function'");
 %! gp.doplot(p1, p2);
 %! pause();

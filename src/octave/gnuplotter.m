@@ -195,6 +195,23 @@ classdef gnuplotter < handle
 			endif
 		endfunction
 
+		## -*- texinfo -*-
+		## @defmethod  gnuplotter {} export (@var{filename}, @var{terminal})
+		## @defmethodx gnuplotter {} export @
+		##     (@var{plotdef}, @var{filename}, @var{terminal}
+		## @defmethodx gnuplotter {} export (@dots{}, @var{options})
+		## Draw plots defined by @var{plotdef} into a file called
+		## @var{filename}.
+		##
+		## @var{terminal} must be a name of an available Gnuplot terminal.
+		## Before plotting, switch Gnuplot to this terminal, passing
+		## any @var{options} to @code{set terminal}.
+		## These options must be given as a single string.
+		## After all data is plotted, restore the original terminal.
+		##
+		## If @var{plotdef} is omitted, use the default plot definition object.
+		## @seealso{gnuplotdef}
+		## @end defmethod
 		function export(obj, a, b, c, d)
 			if (nargin < 3)
 				error("Need at least two arguments");

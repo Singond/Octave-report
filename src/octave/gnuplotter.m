@@ -264,18 +264,6 @@ classdef gnuplotter < handle
 			endif
 		endfunction
 	endmethods
-
-	methods (Static = true)
-		function D = datamatrix(X, Y)
-			if (!isnumeric(X))
-				error("X must be a numeric value");
-			elseif (!isnumeric(Y))
-				error("Y must be a numeric value");
-			endif
-			# TODO Check for size compatibility
-			D = [X(:) Y(:)];
-		endfunction
-	endmethods
 endclassdef
 
 %!demo

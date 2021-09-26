@@ -25,6 +25,8 @@ classdef gnuplotter < handle
 	##     (@dots{}, @qcode{"initfile"})
 	## @deftypefnx Constructor {@var{gp} =} gnuplotter @
 	##     (@dots{}, @qcode{"verbose"})
+	## @deftypefnx Constructor {@var{gp} =} gnuplotter @
+	##     (@dots{}, @qcode{"logfile"}, @var{logname})
 	## Construct a new @code{gnuplotter} object.
 	##
 	## If the @qcode{"initfile"} switch is given, launch Gnuplot without
@@ -36,6 +38,12 @@ classdef gnuplotter < handle
 	## If the @qcode{"verbose"} switch is set, output some diagnostic messages
 	## from @code{gnuplotter} into standard output.
 	## Note that this does not affect verbosity of Gnuplot itself.
+	##
+	## To log what is being passed to Gnuplot, the @qcode{"logfile"}
+	## parameter may be used.
+	## This will place a copy of the data being sent into @var{logname}.
+	## Using this feature requires the @code{tee} command to be available
+	## on the system.
 	## @end deftypefn
 	properties (Access = private)
 		## The gnuplot process
@@ -55,11 +63,15 @@ classdef gnuplotter < handle
 			ip = inputParser();
 			ip.addSwitch("initfile");
 			ip.addSwitch("verbose");
+			ip.addParameter("logfile", "", @ischar);
 			ip.parse(varargin{:});
 			ipr = ip.Results;
 			obj.verbose = ipr.verbose;
 
 			cmd = "gnuplot";
+			if (!isempty(ipr.logfile))
+				cmd = sprintf("tee %s | %s", ipr.logfile, cmd);
+			endif
 			if (!ipr.initfile)
 				cmd = [cmd " --default-settings"];
 			endif

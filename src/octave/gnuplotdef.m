@@ -1,4 +1,8 @@
 classdef gnuplotdef < handle
+	## -*- texinfo -*-
+	## @deftp Class gnuplotdef
+	## Plot definition to be sent to Gnuplot.
+	## @end deftp
 	properties (Constant = true)
 		UNDEFINED = -1
 	endproperties

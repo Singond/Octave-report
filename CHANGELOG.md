@@ -2,6 +2,11 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
+[Unreleased]
+------------
+### Fixed
+- Removed warning about unusable help text during installation.
+
 [0.5.0] - 2021-09-28
 --------------------
 ### Added

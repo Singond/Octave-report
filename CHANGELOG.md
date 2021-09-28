@@ -2,8 +2,8 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
-Unreleased
-----------
+[0.5.0] - 2021-09-28
+--------------------
 ### Added
 - `gnuplotter` now accepts several options and parameters.
   The `verbose` option increases the verbosity,
@@ -12,7 +12,7 @@ Unreleased
   to Gnuplot.
 - Documentation for some functions and objects (available through `help`).
 ### Changed
-- **The parameters of** `gnuplotter.plot` **have changed.** The function now
+- **The parameters of `gnuplotter.plot` have changed.** The function now
   accepts the x and y-values as separate arguments, like the standard `plot`
   function in Octave.
 - By default, `gnuplotter` now starts Gnuplot with the `--default-settings`

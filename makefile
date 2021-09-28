@@ -1,4 +1,4 @@
-VERSION := 0.5.0-alpha
+VERSION := 0.5.0
 NAME := report
 
 DIST_NAME   := ${NAME}-${VERSION}.tar.gz

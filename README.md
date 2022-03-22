@@ -13,7 +13,6 @@ Before proceeding, make sure that `make` is installed. Then follow these steps:
 1. Download the project source
 2. Enter the root directory of the project
 3. Run `make install`
-4. Enter the `build` directory, launch Octave and install the package
 
 ```sh
 git clone https://github.com/Singond/Octave-report.git

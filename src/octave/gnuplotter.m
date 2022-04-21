@@ -101,9 +101,9 @@ classdef gnuplotter < handle
 			pclose(obj.gp);
 		endfunction
 
-		##--------------------------------------------------------------
-		## Gnuplot primitives
-		##--------------------------------------------------------------
+		#!#-------------------------------------------------------------
+		#!# Gnuplot primitives
+		#!#-------------------------------------------------------------
 
 		## usage: exec(command)
 		##
@@ -169,9 +169,9 @@ classdef gnuplotter < handle
 			fprintf(obj.gp, "unset multiplot\n");
 		endfunction
 
-		##--------------------------------------------------------------
-		## High-level functions
-		##--------------------------------------------------------------
+		#!#-------------------------------------------------------------
+		#!# High-level functions
+		#!#-------------------------------------------------------------
 
 		function doplot(obj, plotdef, varargin)
 			if (nargin == 1)
@@ -260,9 +260,9 @@ classdef gnuplotter < handle
 			fputs(obj.gp, "set terminal pop\n");
 		endfunction
 
-		##--------------------------------------------------------------
-		## Plotdef functions to be delegated to the default plot
-		##--------------------------------------------------------------
+		#!#-------------------------------------------------------------
+		#!# Plotdef functions to be delegated to the default plot
+		#!#-------------------------------------------------------------
 
 		function xlabel(obj, label)
 			obj.plt.xlabel(label);

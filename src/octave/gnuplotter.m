@@ -295,6 +295,25 @@ classdef gnuplotter < handle
 	endmethods
 endclassdef
 
+%!function [gp, logname] = gplog
+%!    logname = tempname();
+%!    gp = gnuplotter("logfile", logname);
+%!endfunction
+
+%!function lines = readlog(logname)
+%!    f = fopen(logname, "r");
+%!    bytes = fread(f);
+%!    lines = strsplit(native2unicode(bytes)', "\n");
+%!    fclose(f);
+%!endfunction
+
+%!test
+%! [gp, log] = gplog();
+%! gp.exec('set label ''\phi = \pi/2''');
+%! clear gp;
+%! log = readlog(log);
+%! assert(log{1}, 'set label ''\phi = \pi/2''');
+
 %!demo
 %! # Simple example.
 %! gp = gnuplotter("verbose");

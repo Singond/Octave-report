@@ -105,11 +105,27 @@ classdef gnuplotter < handle
 		#!# Gnuplot primitives
 		#!#-------------------------------------------------------------
 
-		## usage: exec(command)
+		## -*- texinfo -*-
+		## @defmethod  gnuplotter {} exec(@var{command})
+		## @defmethodx gnuplotter {} exec(@var{command}, @var{args}, @dots{})
 		##
-		## Executes arbitraty gnuplot command.
-		function exec(obj, cmdline)
-			fputs(obj.gp, [cmdline "\n"]);
+		## Execute arbitrary Gnuplot command.
+		##
+		## If @var{args} is given, treat @var{command} as a template string
+		## and use it to format @var{args} as in the @code{printf} function.
+		## @end defmethod
+		function exec(obj, cmdline, varargin)
+			if (nargin < 2)
+				print_usage();
+			elseif (isempty(varargin))
+				fputs(obj.gp, cmdline);
+			else
+				if (is_sq_string(cmdline))
+					cmdline = undo_string_escapes(cmdline);
+				endif
+				fprintf(obj.gp, cmdline, varargin{:});
+			endif
+			fputs(obj.gp, "\n");
 		endfunction
 
 		function load(obj, filename)
@@ -307,12 +323,47 @@ endclassdef
 %!    fclose(f);
 %!endfunction
 
+%!# Escape sequences not interpreted
 %!test
 %! [gp, log] = gplog();
 %! gp.exec('set label ''\phi = \pi/2''');
 %! clear gp;
 %! log = readlog(log);
 %! assert(log{1}, 'set label ''\phi = \pi/2''');
+%!test
+%! [gp, log] = gplog();
+%! gp.exec('set label ''\phi = %.2f \pi''', 6.3);
+%! clear gp;
+%! log = readlog(log);
+%! assert(log{1}, 'set label ''\phi = 6.30 \pi''');
+
+%!# Escape sequences interpreted by Octave
+%!test
+%! [gp, log] = gplog();
+%! gp.exec("set label '\\phi = 2 \\pi'");
+%! clear gp;
+%! log = readlog(log);
+%! assert(log{1}, 'set label ''\phi = 2 \pi''');
+%!test
+%! [gp, log] = gplog();
+%! gp.exec("set label '\\phi = %.2f \\pi'", 6.3);
+%! clear gp;
+%! log = readlog(log);
+%! assert(log{1}, 'set label ''\phi = 6.30 \pi''');
+
+%!# Escape sequences to be interpreted by Gnuplot
+%!test
+%! [gp, log] = gplog();
+%! gp.exec('set label "\\phi = 2 \\pi\nnew line"');
+%! clear gp;
+%! log = readlog(log);
+%! assert(log{1}, 'set label "\\phi = 2 \\pi\nnew line"');
+%!test
+%! [gp, log] = gplog();
+%! gp.exec('set label "\\phi = %.2f \\pi\nnew line"', 6.3);
+%! clear gp;
+%! log = readlog(log);
+%! assert(log{1}, 'set label "\\phi = 6.30 \\pi\nnew line"');
 
 %!demo
 %! # Simple example.
@@ -368,6 +419,21 @@ endclassdef
 %!     gp.plot(x, y, "w l");
 %! endfor
 %! gp.doplot;
+%! pause();
+
+%!demo
+%! ## Mutliline text
+%! gp = gnuplotter("verbose");
+%! x = (1:10)';
+%! y = [0.91 0.63 0.27 0.83 0.82 0.43 0.45 0.44 0.81, 0.17]';
+%! gp.title('Plot with multiline text\nin the title and label');
+%! gp.xlabel("x");
+%! gp.ylabel("y");
+%! gp.exec(
+%!     'set label "mean y = %.3f\nmedian y = %.3f" at 5,0.3',
+%!     mean(y), median(y));
+%! gp.plot(x, y, 'pt 5 ps 2 lc "red"');
+%! gp.doplot();
 %! pause();
 
 %!demo

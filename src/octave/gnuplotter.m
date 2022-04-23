@@ -1,6 +1,7 @@
 classdef gnuplotter < handle
 	## -*- texinfo -*-
 	## @deftp Class gnuplotter
+	##
 	## Interface to a Gnuplot process.
 	##
 	## This class enables controlling Gnuplot from within Octave.
@@ -18,6 +19,8 @@ classdef gnuplotter < handle
 	## manually.
 	## This used to be an issue in Octave 4.4, but was fixed at some point
 	## between versions 4.4 and 6.2.
+	##
+	## @seealso{gnuplotdef}
 	## @end deftp
 	##
 	## @deftypefn  Constructor {@var{gp} =} gnuplotter ()
@@ -27,6 +30,7 @@ classdef gnuplotter < handle
 	##     (@dots{}, @qcode{"verbose"})
 	## @deftypefnx Constructor {@var{gp} =} gnuplotter @
 	##     (@dots{}, @qcode{"logfile"}, @var{logname})
+	##
 	## Construct a new @code{gnuplotter} object.
 	##
 	## If the @qcode{"initfile"} switch is given, launch Gnuplot without
@@ -223,6 +227,7 @@ classdef gnuplotter < handle
 		## @defmethodx gnuplotter {} export @
 		##     (@var{plotdef}, @var{filename}, @var{terminal}
 		## @defmethodx gnuplotter {} export (@dots{}, @var{options})
+		##
 		## Draw plots defined by @var{plotdef} into a file called
 		## @var{filename}.
 		##

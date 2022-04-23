@@ -1,7 +1,10 @@
 classdef gnuplotdef < handle
 	## -*- texinfo -*-
 	## @deftp Class gnuplotdef
+	##
 	## Plot definition to be sent to Gnuplot.
+	##
+	## @seealso{gnuplotter}
 	## @end deftp
 	properties (Constant = true)
 		UNDEFINED = -1
@@ -28,6 +31,7 @@ classdef gnuplotdef < handle
 		## @defmethodx gnuplotdef plot (@dots{}, @var{style})
 		## @defmethodx gnuplotdef plot @
 		##     (@var{x1}, @var{x2}, @dots{}, @var{xn}, @var{yn})
+		##
 		## Define the plot data and style to be plotted later with
 		## @code{doplot}.
 		##
@@ -76,6 +80,7 @@ classdef gnuplotdef < handle
 
 		## -*- texinfo -*-
 		## @defmethod gnuplotdef clearplot ()
+		##
 		## Clear the plot definition given in @code{plot}.
 		## @end defmethod
 		function clearplot(obj)
@@ -84,6 +89,7 @@ classdef gnuplotdef < handle
 
 		## -*- texinfo -*-
 		## @defmethod gnuplotdef doplot (@var{gnuplotter}, @var{fid})
+		##
 		## Draw plot according to specifications and data given by calling
 		## the @code{plot} function.
 		## @end defmethod

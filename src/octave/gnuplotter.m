@@ -117,13 +117,8 @@ classdef gnuplotter < handle
 		function exec(obj, cmdline, varargin)
 			if (nargin < 2)
 				print_usage();
-			elseif (isempty(varargin))
-				fputs(obj.gp, cmdline);
 			else
-				if (is_sq_string(cmdline))
-					cmdline = undo_string_escapes(cmdline);
-				endif
-				fprintf(obj.gp, cmdline, varargin{:});
+				format_args(obj.gp, cmdline, varargin{:});
 			endif
 			fputs(obj.gp, "\n");
 		endfunction
@@ -280,16 +275,16 @@ classdef gnuplotter < handle
 		#!# Plotdef functions to be delegated to the default plot
 		#!#-------------------------------------------------------------
 
-		function xlabel(obj, label)
-			obj.plt.xlabel(label);
+		function xlabel(obj, varargin)
+			obj.plt.xlabel(varargin{:});
 		endfunction
 
-		function ylabel(obj, label)
-			obj.plt.ylabel(label);
+		function ylabel(obj, varargin)
+			obj.plt.ylabel(varargin{:});
 		endfunction
 
-		function title(obj, title)
-			obj.plt.title(title);
+		function title(obj, varargin)
+			obj.plt.title(varargin{:});
 		endfunction
 
 		function plot(obj, varargin)

@@ -92,16 +92,16 @@ classdef gnuplotdef < handle
 			obj.outputplot(fid);
 		endfunction
 
-		function xlabel(obj, label)
-			obj._xlabel = label;
+		function xlabel(obj, label, varargin)
+			obj._xlabel = sformat_args(label, varargin{:});
 		endfunction
 
-		function ylabel(obj, label)
-			obj._ylabel = label;
+		function ylabel(obj, label, varargin)
+			obj._ylabel = sformat_args(label, varargin{:});
 		endfunction
 
-		function title(obj, title)
-			obj._title = title;
+		function title(obj, title, varargin)
+			obj._title = sformat_args(title, varargin{:});
 		endfunction
 
 		function str = disp(obj)
@@ -184,6 +184,46 @@ classdef gnuplotdef < handle
 		endfunction
 	endmethods
 endclassdef
+
+%!function lines = testnoplot(plt)
+%!    logname = tempname();
+%!    gp = gnuplotter("logfile", logname);
+%!    gp.exec('set term "dumb"');
+%!    gp.exec('set output "/dev/null"');
+%!    gp.doplot(plt);
+%!    clear gp;
+%!    f = fopen(logname, "r");
+%!    bytes = fread(f);
+%!    lines = strsplit(native2unicode(bytes)', "\n");
+%!    fclose(f);
+%!endfunction
+
+%!test
+%! p = gnuplotdef();
+%! p.title('Case \\phi = 2');
+%! p.plot("x");
+%! log = testnoplot(p);
+%! assert(any(strcmp(log, 'set title "Case \\phi = 2"')));
+%!test
+%! p = gnuplotdef();
+%! p.title('Case \\phi = %.1f', 6.734);
+%! p.plot("x");
+%! log = testnoplot(p);
+%! assert(any(strcmp(log, 'set title "Case \\phi = 6.7"')));
+
+%!test
+%! p = gnuplotdef();
+%! p.xlabel('x_%d', 5);
+%! p.plot("x");
+%! log = testnoplot(p);
+%! assert(any(strcmp(log, 'set xlabel "x_5"')));
+
+%!test
+%! p = gnuplotdef();
+%! p.ylabel('y_%d', 2);
+%! p.plot("x");
+%! log = testnoplot(p);
+%! assert(any(strcmp(log, 'set ylabel "y_2"')));
 
 %!demo
 %! x = linspace(0, 2)';

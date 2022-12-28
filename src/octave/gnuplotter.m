@@ -292,6 +292,18 @@ classdef gnuplotter < handle
 			obj.plt.title(varargin{:});
 		endfunction
 
+		## -*- texinfo -*-
+		## @defmethod  gnuplotter {} plot (@var{filename}, @var{terminal})
+		## @defmethodx gnuplotter {} export @
+		##     (@var{plotdef}, @var{filename}, @var{terminal}
+		## @defmethodx gnuplotter {} export (@dots{}, @var{options})
+		##
+		## Draw plots defined by @var{plotdef} into a file called
+		## @var{filename}.
+		##
+		## If @var{plotdef} is omitted, use the default plot definition object.
+		## @seealso{gnuplotdef}
+		## @end defmethod
 		function plot(obj, varargin)
 			obj.plt.plot(varargin{:});
 		endfunction

@@ -4,8 +4,12 @@ This is a changelog for the Octave `report` package.
 
 [Unreleased]
 ------------
+### Added
+- Several methods in `gnuplotter` now support `printf`-like parameter
+  interpolation. These are: `exec`, `xlabel`, `ylabel`, `title`.
 ### Fixed
 - Removed warning about unusable help text during installation.
+- Fixed some documentation issues.
 
 [0.5.0] - 2021-09-28
 --------------------

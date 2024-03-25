@@ -422,15 +422,14 @@ endclassdef
 %! ## Control gnuplot directly.
 %! gp = gnuplotter("verbose", "initfile");
 %! gp.exec("\
-%!     set style line 1 lt 1 lw 2 lc rgb '#D53E4F' \n\
-%!     set style line 2 lt 1 lw 2 lc rgb '#F46D43' # orange\n\
-%!     set style line 3 lt 1 lw 2 lc rgb '#FDAE61' # pale orange \n\
-%!     set style line 4 lt 1 lw 2 lc rgb '#FEE08B' # pale yellow-orange \n\
-%!     set style line 5 lt 1 lw 2 lc rgb '#E6F598' # pale yellow-green \n\
-%!     set style line 6 lt 1 lw 2 lc rgb '#ABDDA4' # pale green \n\
-%!     set style line 7 lt 1 lw 2 lc rgb '#66C2A5' # green \n\
-%!     set style line 8 lt 1 lw 2 lc rgb '#3288BD' # blue \n\
-%!     set style increment user \n\
+%!     set linetype 1 lw 2 lc rgb '#D53E4F' \n\
+%!     set linetype 2 lw 2 lc rgb '#F46D43' # orange\n\
+%!     set linetype 3 lw 2 lc rgb '#FDAE61' # pale orange \n\
+%!     set linetype 4 lw 2 lc rgb '#FEE08B' # pale yellow-orange \n\
+%!     set linetype 5 lw 2 lc rgb '#E6F598' # pale yellow-green \n\
+%!     set linetype 6 lw 2 lc rgb '#ABDDA4' # pale green \n\
+%!     set linetype 7 lw 2 lc rgb '#66C2A5' # green \n\
+%!     set linetype 8 lw 2 lc rgb '#3288BD' # blue \n\
 %!     set xlabel 'Angle' \n\
 %!     set ylabel 'Value' \n\
 %!     set yrange [-0.6:1] \n\

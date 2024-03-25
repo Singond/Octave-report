@@ -2,6 +2,11 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
+[0.6.1] - 2024-03-25
+--------------------
+### Fixed
+- A build issue introduced with changes to makefile.
+
 [0.6.0] - 2024-03-25
 --------------------
 ### Added

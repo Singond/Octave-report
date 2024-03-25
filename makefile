@@ -8,7 +8,7 @@ DIST_TMPDIR := ${build_dir}/pkg/${NAME}
 
 SOURCES := $(shell find src -type f)
 FILES_OCTAVE := $(patsubst src/octave/%,${DIST_TMPDIR}/inst/%,$(shell find src/octave -type f))
-FILES_META   := $(patsubst src/meta/%,${DIST_TMPDIR}/%,$(shell find src/meta -type f)) #${DIST_TMPDIR}/COPYING
+FILES_META   := $(patsubst src/meta/%,${DIST_TMPDIR}/%,$(shell find src/meta -type f)) ${DIST_TMPDIR}/COPYING
 
 test_install = ${build_dir}/test-install
 
@@ -28,9 +28,9 @@ $(filter-out %/COPYING,${FILES_META}): ${DIST_TMPDIR}/%: src/meta/%
 	@mkdir -p $(dir $@)
 	cp $< $@
 
-#${DIST_TMPDIR}/COPYING: COPYING
-#	@mkdir -p $(dir $@)
-#	cp $< $@
+${DIST_TMPDIR}/COPYING: COPYING
+	@mkdir -p $(dir $@)
+	cp $< $@
 
 clean:
 	rm -rf build/

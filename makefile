@@ -1,4 +1,4 @@
-VERSION := 0.6.0-rc1
+VERSION != grep "Version:" src/meta/DESCRIPTION | cut -d" " -f2
 NAME := report
 
 DIST_NAME   := ${NAME}-${VERSION}.tar.gz
@@ -20,14 +20,13 @@ ${FILES_OCTAVE}: ${DIST_TMPDIR}/inst/%: src/octave/%
 	@mkdir -p $(dir $@)
 	cp $< $@
 
-$(filter-out %/DESCRIPTION,${FILES_META}): ${DIST_TMPDIR}/%: src/meta/%
+$(filter-out %/COPYING,${FILES_META}): ${DIST_TMPDIR}/%: src/meta/%
 	@mkdir -p $(dir $@)
 	cp $< $@
 
-${DIST_TMPDIR}/DESCRIPTION: src/meta/DESCRIPTION makefile
-	@mkdir -p $(dir $@)
-	cp $< $@
-	sed -i "s/VAR_VERSION/${VERSION}/" ${DIST_TMPDIR}/DESCRIPTION
+#${DIST_TMPDIR}/COPYING: COPYING
+#	@mkdir -p $(dir $@)
+#	cp $< $@
 
 clean:
 	rm -rf build/

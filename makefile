@@ -43,7 +43,10 @@ uninstall:
 	@echo "Uninstalling local Octave package..."
 	octave-cli --silent --eval 'pkg uninstall ${NAME}'
 
-.PHONY: run
+.PHONY: check run
+check: ${test_install}
+	cd src/octave && octave-cli --silent --eval 'oruntests .'
+
 run: ${test_install} ${test_install}/.packages
 	octave --persist \
 		--eval 'pkg prefix ${test_install} ${test_install};' \

@@ -131,11 +131,24 @@ classdef gnuplotter < handle
 			fputs(obj.gp, sprintf("load '%s'\n", filename));
 		endfunction
 
-		## Passes numerical data directly to gnuplot.
-		function data(obj, D)
+		## -*- texinfo -*-
+		## @defmethod  gnuplotter {} data(@var{D})
+		## @defmethodx gnuplotter {} data(@var{D}, @var{terminator})
+		##
+		## Pass numerical data directly to gnuplot.
+		##
+		## The @var{terminator} argument can be used to change
+		## the sequence sent after the final newline of the data.
+		## The default is @qcode{"e\n"}, indicating the end of data.
+		## Other useful values are an empty line (@qcode{"\n"}),
+		## indicating a discontinuity in plot,
+		## or two empty lines (@qcode{"\n\n"}),
+		## marking a break between data sets.
+		## @end defmethod
+		function data(obj, D, terminator="e\n")
 			fmt = [repmat('%g ', [1 columns(D)])(1:end-1) "\n"];
 			fprintf(obj.gp, fmt, D');
-			fputs(obj.gp, "e\n");
+			fputs(obj.gp, terminator);
 		endfunction
 
 		function settitle(obj, title)

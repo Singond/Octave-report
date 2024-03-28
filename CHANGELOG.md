@@ -2,6 +2,12 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
+[0.7.1] - 2024-03-28
+--------------------
+### Fixed
+- Removed call to deprecated function `isdir` in several functions.
+  Instead, the newer `isfolder` is used.
+
 [0.7.0] - 2024-03-26
 --------------------
 ### Added

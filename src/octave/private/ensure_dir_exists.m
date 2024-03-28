@@ -8,7 +8,7 @@
 ## @end deftypefn
 function ensure_dir_exists(path)
 	[dir, name, ext] = fileparts(path);
-	if (!isdir(dir))
+	if (!isfolder(dir))
 		[status, msg, msgid] = mkdir(dir);
 		if (status != 1)
 			error("Could not create directory %s (error %d): %s",...

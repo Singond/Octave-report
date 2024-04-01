@@ -146,7 +146,7 @@ classdef gnuplotter < handle
 		## marking a break between data sets.
 		## @end defmethod
 		function data(obj, D, terminator="e\n")
-			fmt = [repmat('%g ', [1 columns(D)])(1:end-1) "\n"];
+			fmt = [repmat('%.16g ', [1 columns(D)])(1:end-1) "\n"];
 			fprintf(obj.gp, fmt, D');
 			fputs(obj.gp, terminator);
 		endfunction
@@ -507,4 +507,13 @@ endclassdef
 %! gp.exec("plot '-' w l title 'cosc(x)' ls 1, '-' w l title 'cosc(2x)' ls 2");
 %! gp.data([x z]);
 %! gp.data([x z2]);
+%! pause();
+
+%!demo
+%! # Handling small relative differences in data.
+%! gp = gnuplotter("verbose", "logfile", "gnuplotter.log");
+%! gp.settitle("Handling small relative differences in data\\nThis should be a sine");
+%! x = linspace(0, 2 * pi) + 100000 * pi;
+%! gp.plot(x, sin(x), "w p title 'sin(x - 100000pi)'");
+%! gp.doplot;
 %! pause();

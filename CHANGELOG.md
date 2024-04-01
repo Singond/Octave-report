@@ -2,6 +2,13 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
+[Unreleased]
+------------
+### Fixed
+- Improved handling of data with small relative differences in `gnuplotter`
+  (like `x = 100:0.0001:100.005`), which caused jumps in plot due
+  to rounding errors when piping to Gnuplot.
+
 [0.7.1] - 2024-03-28
 --------------------
 ### Fixed

@@ -95,7 +95,7 @@ classdef gnuplotdef < handle
 		## @end defmethod
 		function doplot(obj, gp, fid)
 			obj.outputtext(gp);
-			obj.outputplot(fid);
+			obj.outputplot(gp, fid);
 		endfunction
 
 		function xlabel(obj, label, varargin)
@@ -135,7 +135,7 @@ classdef gnuplotdef < handle
 
 		## Output plot according to specifications and data given when calling
 		## @code{plots}.
-		function outputplot(obj, fid)
+		function outputplot(obj, gp, fid)
 			## Return if plots is empty
 			if (numel(obj.plots) < 1)
 				error("Nothing to plot");
@@ -169,10 +169,7 @@ classdef gnuplotdef < handle
 				y = obj.plots(r).y;
 				if (isnumeric(y))
 					## Data is numeric values
-					data = [x y];
-					fmt = [repmat('%g ', [1 columns(data)])(1:end-1) "\n"];
-					fprintf(fid, fmt, data');
-					fputs(fid, "e\n");
+					gp.data([x y], "e\n");
 				endif
 			endfor
 		endfunction

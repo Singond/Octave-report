@@ -42,40 +42,29 @@ classdef gnuplotdef < handle
 			expect_data = true;
 			expect_style = false;
 			i = 0;
-			x = y = [];
-			style = "";
 			while ++i <= numel(varargin)
 				a = varargin{i};
-				if (expect_data && !isempty(y))
-					## Flush previous
-					obj.plots(end+1) = gnuplotdef.plotdata(x, y, style);
-					x = y = [];
-					style = "";
-				endif
 				if (expect_data && isnumeric(a))
 					if (i < numel(varargin) && isnumeric(varargin{i+1}))
-						x = a;
-						y = varargin{++i};
+						obj.plots(end+1) = gnuplotdef.plotxydata(...
+							a, varargin{++i});
 					else
-						y = a;
+						obj.plots(end+1) = gnuplotdef.plotdata("numeric", a);
 					endif
 					expect_data = false;
 					expect_style = true;
 				elseif (expect_data && ischar(a))
-					y = a;
+					obj.plots(end+1) = gnuplotdef.plotdata("expression", a);
 					expect_data = false;
 					expect_style = true;
 				elseif (expect_style && ischar(a))
-					style = a;
+					obj.plots(end).style = a;
 					expect_data = true;
 					expect_style = false;
 				else
 					error("gnuplotdef.plot: bad argument %d", i);
 				endif
 			endwhile
-			if (!isempty(y))
-				obj.plots(end+1) = gnuplotdef.plotdata(x, y, style);
-			endif
 		endfunction
 
 		## -*- texinfo -*-
@@ -141,49 +130,60 @@ classdef gnuplotdef < handle
 				error("Nothing to plot");
 			endif
 			## Execute plot command
-			plotstring = "plot ";
+			fputs(fid, "plot ");
 			for r = 1:numel(obj.plots)
-				x = obj.plots(r).x;
-				y = obj.plots(r).y;
-				style = obj.plots(r).style;
-				if (isnumeric(y))
-					## Data is numeric values
-					if (isempty(x))
-						using_cols = 0:columns(y);
-					else
-						using_cols = 1:columns(y)+1;
-					endif
-					using = sprintf("%d:", using_cols)(1:end-1);
-					plotstring = [plotstring ...
-						sprintf("'-' using %s %s, ", using, style)];
-				elseif (ischar(y))
-					## Data is function expression
-					plotstring = [plotstring sprintf("%s %s, ", y, style)];
+				if (r > 1)
+					fputs(fid, ", ");
 				endif
+				gnuplotdef.outputplotcmd(fid, obj.plots(r));
 			endfor
-##			disp([plotstring "\n"]);
-			fputs(fid, [plotstring(1:end-2) "\n"]);
+			fputs(fid, "\n");
 			## Pass numeric data to plot command
 			for r = 1:numel(obj.plots)
-				x = obj.plots(r).x;
-				y = obj.plots(r).y;
-				if (isnumeric(y))
-					## Data is numeric values
-					gp.data([x y], "e\n");
-				endif
+				gnuplotdef.outputplotdata(gp, obj.plots(r));
 			endfor
 		endfunction
 	endmethods
 
 	methods (Access = private, Static = true)
-		function pd = plotdata(x={}, y={}, style={})
+		function pd = plotdata(type, data, style="")
+			if (nargin == 0)
+				pd = struct("type", {}, "data", {}, "style", {});
+				return;
+			end
+			pd = struct("type", type, "data", data, "style", style);
+		endfunction
+
+		function pd = plotxydata(x, y, style="")
 			if (isrow(x))
 				x = x';
 			endif
 			if (isrow(y))
 				y = y';
 			endif
-			pd = struct("x", x, "y", y, "style", style);
+			pd = gnuplotdef.plotdata("numeric", [x y], style);
+		endfunction
+
+		function outputplotcmd(fid, pd)
+			switch (pd.type)
+				case "numeric"
+					fprintf(fid, "'-' %s", pd.style);
+				case "expression"
+					fprintf(fid, "%s %s", pd.data, pd.style);
+				otherwise
+					error("gnuplotdef: bad type of plot data");
+			endswitch
+		endfunction
+
+		function outputplotdata(gp, pd)
+			switch (pd.type)
+				case "numeric"
+					gp.data(pd.data, "e\n");
+				case "expression"
+					## Do nothing
+				otherwise
+					error("gnuplotdef: bad type of plot data");
+			endswitch
 		endfunction
 	endmethods
 endclassdef

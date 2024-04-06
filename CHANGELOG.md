@@ -2,6 +2,15 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
+[Unreleased]
+------------
+### Changed
+- The internals of `gnuplotter.plot` have been rewritten to allow for more
+  flexibility in arguments. Also, the function now does not automatically
+  output `using 1:2...` to the `plot` argument to enable using it with
+  matrices. This is not expected to case many problems with older code,
+  because Gnuplot handles plot commands without `using` just fine.
+
 [0.7.2] - 2024-04-01
 --------------------
 ### Fixed

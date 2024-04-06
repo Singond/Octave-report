@@ -2,8 +2,8 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
-[Unreleased]
-------------
+[0.8.0] - 2024-04-06
+--------------------
 ### Added
 - New `gnuplotter.plotmatrix` function to simplify plotting non-uniform
   matrices.

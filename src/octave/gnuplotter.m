@@ -511,7 +511,7 @@ endclassdef
 
 %!demo
 %! # Handling small relative differences in data.
-%! gp = gnuplotter("verbose", "logfile", "gnuplotter.log");
+%! gp = gnuplotter("verbose");
 %! gp.settitle("Handling small relative differences in data\\nThis should be a sine");
 %! x = linspace(0, 2 * pi) + 100000 * pi;
 %! gp.plot(x, sin(x), "w p title 'sin(x - 100000pi)'");

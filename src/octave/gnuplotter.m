@@ -326,7 +326,7 @@ classdef gnuplotter < handle
 		endfunction
 
 		function str = disp(obj)
-			s = "gnuplotter";
+			s = sprintf("gnuplotter(fid=%d)", obj.gp);
 			if (nargout == 0)
 				disp(s);
 			else

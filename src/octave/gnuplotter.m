@@ -321,6 +321,22 @@ classdef gnuplotter < handle
 			obj.plt.plot(varargin{:});
 		endfunction
 
+		## -*- texinfo -*-
+		## @defmethod  gnuplotter {} plotmatrix (@var{M})
+		## @defmethodx gnuplotter {} plotmatrix (@var{x}, @var{y}, @var{M})
+		## @defmethodx gnuplotter {} plotmatrix (@dots{}, @var{style})
+		##
+		## Plot the matrix @var{M} into the default plot definition.
+		##
+		## This uses the @code{plot '-' matrix} Gnuplot command.
+		##
+		## If @var{x} and @var{y} are given, plot a non-uniform matrix
+		## with @code{plot '-' nonuniform matrix}.
+		## @end defmethod
+		function plotmatrix(obj, varargin)
+			obj.plt.plotmatrix(varargin{:});
+		endfunction
+
 		function clearplot(obj)
 			obj.plt.clearplot();
 		endfunction
@@ -515,5 +531,25 @@ endclassdef
 %! gp.settitle("Handling small relative differences in data\\nThis should be a sine");
 %! x = linspace(0, 2 * pi) + 100000 * pi;
 %! gp.plot(x, sin(x), "w p title 'sin(x - 100000pi)'");
+%! gp.doplot;
+%! pause();
+
+%!demo
+%! # Plot a matrix.
+%! gp = gnuplotter("verbose");
+%! gp.settitle("Plotting a matrix");
+%! x = linspace(-2, 2);
+%! y = linspace(0, 2)';
+%! gp.plot(sin(x * pi) .* cos(y * pi), "matrix w image");
+%! gp.doplot;
+%! pause();
+
+%!demo
+%! # Plot a matrix with custom x and y coordinates.
+%! gp = gnuplotter("verbose");
+%! gp.settitle("Plotting a matrix with custom x and y coordinates");
+%! x = linspace(-2, 2);
+%! y = linspace(0, 2)';
+%! gp.plotmatrix(x, y, sin(x * pi) .* cos(y * pi), "w image");
 %! gp.doplot;
 %! pause();

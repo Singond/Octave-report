@@ -68,6 +68,38 @@ classdef gnuplotdef < handle
 		endfunction
 
 		## -*- texinfo -*-
+		## @defmethod  gnuplotter {} plotmatrix (@var{M})
+		## @defmethodx gnuplotter {} plotmatrix (@var{x}, @var{y}, @var{M})
+		## @defmethodx gnuplotter {} plotmatrix (@dots{}, @var{style})
+		##
+		## Define the matrix @var{M} to be plotted later with @code{doplot}.
+		##
+		## This uses the @code{plot '-' matrix} Gnuplot command.
+		##
+		## If @var{x} and @var{y} are given, plot a non-uniform matrix
+		## with @code{plot '-' nonuniform matrix}.
+		##
+		## This function does not interact with gnuplot in any way,
+		## it merely stores the plot definition for later retrieval.
+		## @end defmethod
+		function plotmatrix(obj, varargin)
+			i = 0;
+			if (nargin >= 3 && all(cellfun("isnumeric", varargin(1:3))))
+				[x, y, data] = varargin{1:3};
+				M = [numel(x) x(:)'; y(:) data];
+				pd = gnuplotdef.plotdata("non-uniform-matrix", M);
+				i = 3;
+			else
+				pd = gnuplotdef.plotdata("uniform-matrix", varargin{1});
+				i = 1;
+			end
+			if (nargin > i)
+				pd.style = varargin{++i};
+			end
+			obj.plots(end+1) = pd;
+		end
+
+		## -*- texinfo -*-
 		## @defmethod gnuplotdef clearplot ()
 		##
 		## Clear the plot definition given in @code{plot}.
@@ -168,6 +200,10 @@ classdef gnuplotdef < handle
 			switch (pd.type)
 				case "numeric"
 					fprintf(fid, "'-' %s", pd.style);
+				case "uniform-matrix"
+					fprintf(fid, "'-' matrix %s", pd.style);
+				case "non-uniform-matrix"
+					fprintf(fid, "'-' nonuniform matrix %s", pd.style);
 				case "expression"
 					fprintf(fid, "%s %s", pd.data, pd.style);
 				otherwise
@@ -177,7 +213,7 @@ classdef gnuplotdef < handle
 
 		function outputplotdata(gp, pd)
 			switch (pd.type)
-				case "numeric"
+				case {"numeric", "uniform-matrix", "non-uniform-matrix"}
 					gp.data(pd.data, "e\n");
 				case "expression"
 					## Do nothing

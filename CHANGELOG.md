@@ -4,6 +4,9 @@ This is a changelog for the Octave `report` package.
 
 [Unreleased]
 ------------
+### Added
+- New `gnuplotter.plotmatrix` function to simplify plotting non-uniform
+  matrices.
 ### Changed
 - The internals of `gnuplotter.plot` have been rewritten to allow for more
   flexibility in arguments. Also, the function now does not automatically

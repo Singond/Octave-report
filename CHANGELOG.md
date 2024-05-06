@@ -2,6 +2,12 @@ Changelog
 =========
 This is a changelog for the Octave `report` package.
 
+[0.8.1] - 2024-05-07
+--------------------
+### Fixed
+- Behaviour of `gnuplotdef.plotmatrix` with two arguments, which previously
+  threw an error.
+
 [0.8.0] - 2024-04-06
 --------------------
 ### Added

@@ -84,7 +84,7 @@ classdef gnuplotdef < handle
 		## @end defmethod
 		function plotmatrix(obj, varargin)
 			i = 0;
-			if (nargin >= 3 && all(cellfun("isnumeric", varargin(1:3))))
+			if (nargin >= 4 && all(cellfun("isnumeric", varargin(1:3))))
 				[x, y, data] = varargin{1:3};
 				M = [numel(x) x(:)'; y(:) data];
 				pd = gnuplotdef.plotdata("non-uniform-matrix", M);
